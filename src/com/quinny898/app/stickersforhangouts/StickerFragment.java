@@ -40,7 +40,7 @@ public class StickerFragment extends Fragment {
 	//Creates UI and setups up Tab Elements
 	@SuppressLint("ResourceAsColor")
 	@Override
-	public View onCreateView(LayoutInflater inflater,ViewGroup container, Bundle savedInstanceState) 
+	public View onCreateView(LayoutInflater inflater,ViewGroup container, Bundle savedInstanceState)
 	{
 		StickerPickerActivity.options = new DisplayImageOptions.Builder()
 		.showImageOnLoading(R.drawable.ic_action_loading)
@@ -56,8 +56,8 @@ public class StickerFragment extends Fragment {
 		v = inflater.inflate(R.layout.activity_sticker_picker, null);
 		ProgressBar loading = (ProgressBar) v.findViewById(R.id.loading);
 		GridView toplayout = (GridView) v.findViewById(R.id.grid_view);
-		
-		
+
+
 		toplayout.setAdapter(new ImageAdapter());
 		loading.setVisibility(View.GONE);
 		SharedPreferences prefs = getActivity().getSharedPreferences(
@@ -78,7 +78,7 @@ public class StickerFragment extends Fragment {
 				getActivity().setResult(StickerPickerActivity.RESULT_OK, new Intent().setData(uri));
 				getActivity().finish();
 			}
-			
+
 		});
 		toplayout.setOnItemLongClickListener(new OnItemLongClickListener(){
 
@@ -100,12 +100,12 @@ public class StickerFragment extends Fragment {
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
 							dialog.dismiss();
-							
+
 						}
-						
+
 					});
 					builder.setNegativeButton(getString(R.string.use), new DialogInterface.OnClickListener() {
-						
+
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
 							dialog.dismiss();
@@ -116,22 +116,22 @@ public class StickerFragment extends Fragment {
 									+ StickerPickerActivity.gifs[arg2]);
 							getActivity().setResult(StickerPickerActivity.RESULT_OK, new Intent().setData(uri));
 							getActivity().finish();
-							
+
 						}
 					});
 					builder.show();
-					
+
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
-				
-				
-				
+
+
+
 				return false;
 			}
-			
+
 		});
-		
+
 	    return v;
 
 	}
@@ -152,7 +152,7 @@ public class StickerFragment extends Fragment {
 		}
 
 		@Override
-		public View getView(int position, View convertView, ViewGroup parent) {
+		public View getView(final int position, View convertView, ViewGroup parent) {
 			final ViewHolder holder;
 			View view = convertView;
 			if (view == null) {
@@ -165,8 +165,11 @@ public class StickerFragment extends Fragment {
 			} else {
 				holder = (ViewHolder) view.getTag();
 			}
-			ImageLoader imageLoader = ImageLoader.getInstance();
-			imageLoader.displayImage("file:///"+Environment.getExternalStorageDirectory()+"/Android/data/"+getActivity().getPackageName()+"/stickers/"+StickerPickerActivity.pngs[position], holder.imageView, StickerPickerActivity.options, new SimpleImageLoadingListener() {
+
+			final ImageLoader imageLoader = ImageLoader.getInstance();
+
+			imageLoader.displayImage("assets://"+StickerPickerActivity.pngs[position],
+                    holder.imageView, StickerPickerActivity.options, new SimpleImageLoadingListener() {
 										 @Override
 										 public void onLoadingStarted(String imageUri, View view) {
 											 holder.progressBar.setProgress(0);

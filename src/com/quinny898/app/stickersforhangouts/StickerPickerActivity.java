@@ -1,7 +1,5 @@
 package com.quinny898.app.stickersforhangouts;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -18,7 +16,6 @@ import com.startapp.android.publish.StartAppSDK;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 
 import android.os.Bundle;
-import android.os.Environment;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.ComponentName;
@@ -35,7 +32,6 @@ import android.support.v7.app.ActionBar.Tab;
 import android.support.v7.app.ActionBar.TabListener;
 import android.support.v7.app.ActionBarActivity;
 import android.text.Html;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -85,8 +81,7 @@ public class StickerPickerActivity extends ActionBarActivity {
 		StartAppSDK.init(this, "102378373", "205305173", true);
 		prefs = this.getSharedPreferences(
 			      getPackageName()+"_preferences", Context.MODE_PRIVATE);
-		copyAssets();
-		
+
 		
 		
 			getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -184,43 +179,6 @@ public class StickerPickerActivity extends ActionBarActivity {
 
         return bitmap;
     }
-	private void copyAssets() {
-		AssetManager assetManager = getAssets();
-		String[] files = null;
-		File f = new File(Environment.getExternalStorageDirectory().toString()
-				+ "/Android/data/" + getPackageName() + "/stickers/");
-		
-			f.mkdirs();
-
-			try {
-				files = assetManager.list("");
-			} catch (IOException e) {
-				Log.e("StickersForHangouts", e.getMessage());
-			}
-
-			for (String filename : files) {
-				System.out.println("File name => " + filename);
-				InputStream in = null;
-				OutputStream out = null;
-				try {
-					in = assetManager.open(filename);
-					out = new FileOutputStream(Environment
-							.getExternalStorageDirectory().toString()
-							+ "/Android/data/"
-							+ getPackageName()
-							+ "/stickers/" + filename);
-					copyFile(in, out);
-					in.close();
-					in = null;
-					out.flush();
-					out.close();
-					out = null;
-				} catch (Exception e) {
-					Log.e("StickersForHangouts", e.getMessage());
-				}
-			}
-		
-	}
 
 	private void copyFile(InputStream in, OutputStream out) throws IOException {
 		byte[] buffer = new byte[1024];
@@ -308,7 +266,7 @@ public class StickerPickerActivity extends ActionBarActivity {
 				holder = (ViewHolder) view.getTag();
 			}
 			ImageLoader imageLoader = ImageLoader.getInstance();
-			imageLoader.displayImage("file:///"+Environment.getExternalStorageDirectory()+"/Android/data/"+getPackageName()+"/stickers/"+pngs[position], holder.imageView, options, new SimpleImageLoadingListener() {
+			imageLoader.displayImage("assets://"+"/stickers/"+pngs[position], holder.imageView, options, new SimpleImageLoadingListener() {
 										 @Override
 										 public void onLoadingStarted(String imageUri, View view) {
 											 holder.progressBar.setProgress(0);
