@@ -8,12 +8,8 @@ import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.core.assist.ImageLoadingProgressListener;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
-import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
 import com.startapp.android.publish.StartAppSDK;
-
-import com.nostra13.universalimageloader.core.assist.FailReason;
 
 import android.os.Bundle;
 import android.annotation.SuppressLint;
@@ -34,11 +30,6 @@ import android.support.v7.app.ActionBarActivity;
 import android.text.Html;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 public class StickerPickerActivity extends ActionBarActivity {
@@ -234,71 +225,6 @@ public class StickerPickerActivity extends ActionBarActivity {
 				.tasksProcessingOrder(QueueProcessingType.LIFO)
 				.build();
 		ImageLoader.getInstance().init(config);
-	}
-	public class ImageAdapter extends BaseAdapter {
-		@Override
-		public int getCount() {
-			return pngs.length;
-		}
-
-		@Override
-		public Object getItem(int position) {
-			return null;
-		}
-
-		@Override
-		public long getItemId(int position) {
-			return position;
-		}
-
-		@Override
-		public View getView(int position, View convertView, ViewGroup parent) {
-			final ViewHolder holder;
-			View view = convertView;
-			if (view == null) {
-				view = getLayoutInflater().inflate(R.layout.item_grid_image, parent, false);
-				holder = new ViewHolder();
-				assert view != null;
-				holder.imageView = (ImageView) view.findViewById(R.id.image);
-				holder.progressBar = (ProgressBar) view.findViewById(R.id.progress);
-				view.setTag(holder);
-			} else {
-				holder = (ViewHolder) view.getTag();
-			}
-			ImageLoader imageLoader = ImageLoader.getInstance();
-			imageLoader.displayImage("assets://"+"/stickers/"+pngs[position], holder.imageView, options, new SimpleImageLoadingListener() {
-										 @Override
-										 public void onLoadingStarted(String imageUri, View view) {
-											 holder.progressBar.setProgress(0);
-											 holder.progressBar.setVisibility(View.VISIBLE);
-										 }
-
-										 @Override
-										 public void onLoadingFailed(String imageUri, View view,
-												 FailReason failReason) {
-											 holder.progressBar.setVisibility(View.GONE);
-										 }
-
-										 @Override
-										 public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-											 holder.progressBar.setVisibility(View.GONE);
-										 }
-									 }, new ImageLoadingProgressListener() {
-										 @Override
-										 public void onProgressUpdate(String imageUri, View view, int current,
-												 int total) {
-											 holder.progressBar.setProgress(Math.round(100.0f * current / total));
-										 }
-									 }
-			);
-
-			return view;
-		}
-
-		class ViewHolder {
-			ImageView imageView;
-			ProgressBar progressBar;
-		}
 	}
 
 }
