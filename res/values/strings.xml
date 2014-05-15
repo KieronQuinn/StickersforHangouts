@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Stickers for Hangouts</string>
+    <string name="action_settings">Settings</string>
+    <string name="select_sticker">Pick a sticker</string>
+    <string name="about">About</string>
+    <string name="about_text">&lt;b&gt;App created by Quinny898&lt;/b&gt;&lt;br&gt;&lt;br&gt;Stickers from Google Hangouts iOS app and Google+</string>
+    <string name="animate_preview">Animate Preview</string>
+    <string name="animate_failed">Animated previews failed to load, your sticker will still be animated though!</string>
+    <string name="info">&lt;b&gt;How to use&lt;/b&gt;&lt;br&gt;Open Hangouts, and select the chat you want the sticker for&lt;br&gt;Tap the attach button (the paperclip) and select &quot;Attach Photos&quot;&lt;br&gt;Select &quot;Pick a sticker&quot; from the options&lt;br&gt;Choose the sticker you want&lt;br&gt;Enter a caption and send!</string>
+    <string name="youtube_guide">How to guide on YouTube</string>
+    <string name="hide">Hide from App Drawer</string>
+    <string name="how_to_show">You can show it again from the sticker add screen, under the options menu</string>
+    <string name="show_app">Show in app drawer</string>
+    <string name="reboot">A reboot may be required for these changes to take place</string>
+    <string name="stickers_xposed">Add an &quot;Add sticker&quot; option to Hangouts</string>
+    <string name="add_sticker">Attach sticker</string>
+    <string name="long_press">Long click for a preview</string>
+    <string name="close">Close</string>
+    <string name="use">Use</string>
+    <string name="loading">Loading</string>
+    <string name="stickers">Stickers</string>
+    <string name="extras">Extras</string>
+
+</resources>
