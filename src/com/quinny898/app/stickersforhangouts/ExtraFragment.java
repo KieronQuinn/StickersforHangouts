@@ -11,8 +11,10 @@ import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.assist.ImageLoadingProgressListener;
 import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
@@ -75,6 +77,10 @@ public class ExtraFragment extends Fragment {
 			@Override
 			public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
 					final int arg2, long arg3) {
+				//Stop showing "Long click for preview" crouton
+				SharedPreferences prefs = getActivity().getSharedPreferences(
+					      getActivity().getPackageName()+"_prefs", Context.MODE_PRIVATE);
+				prefs.edit().putBoolean("show_crouton", false).commit();
 				AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 				try {
 					GifDrawable gifFromAssets = new GifDrawable( getActivity().getAssets(), gifs[arg2] );

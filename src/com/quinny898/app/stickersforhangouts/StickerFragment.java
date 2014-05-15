@@ -14,8 +14,10 @@ import de.keyboardsurfer.android.widget.crouton.Crouton;
 import de.keyboardsurfer.android.widget.crouton.Style;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
@@ -58,7 +60,11 @@ public class StickerFragment extends Fragment {
 		
 		toplayout.setAdapter(new ImageAdapter());
 		loading.setVisibility(View.GONE);
-		Crouton.makeText(getActivity(), getString(R.string.long_press), new Style.Builder().setBackgroundColor(R.color.hangouts).build()).show();
+		SharedPreferences prefs = getActivity().getSharedPreferences(
+			      getActivity().getPackageName()+"_prefs", Context.MODE_PRIVATE);
+		if(prefs.getBoolean("show_crouton", true)){
+			Crouton.makeText(getActivity(), getString(R.string.long_press), new Style.Builder().setBackgroundColor(R.color.hangouts).build()).show();
+		}
 		toplayout.setOnItemClickListener(new OnItemClickListener(){
 
 			@Override
@@ -79,6 +85,10 @@ public class StickerFragment extends Fragment {
 			@Override
 			public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
 					final int arg2, long arg3) {
+				//Stop showing "Long click for preview" crouton
+				SharedPreferences prefs = getActivity().getSharedPreferences(
+					      getActivity().getPackageName()+"_prefs", Context.MODE_PRIVATE);
+				prefs.edit().putBoolean("show_crouton", false).commit();
 				AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 				try {
 					GifDrawable gifFromAssets = new GifDrawable( getActivity().getAssets(), StickerPickerActivity.gifs[arg2] );
