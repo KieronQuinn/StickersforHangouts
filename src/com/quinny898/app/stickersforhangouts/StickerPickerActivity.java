@@ -15,7 +15,11 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBar.Tab;
 import android.support.v7.app.ActionBar.TabListener;
@@ -26,11 +30,10 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 public class StickerPickerActivity extends ActionBarActivity {
-	public final static int FINGER_RELEASED = 0;
-	public final static int FINGER_TOUCHED = 1;
-	public final static int FINGER_DRAGGING = 2;
-	public final static int FINGER_UNDEFINED = 3;
 	SharedPreferences prefs;
+    ViewPager mViewPager;
+    String[] mViewPagerTabsTitles;
+    Fragment[] mViewPagerFragments;
 	static DisplayImageOptions options;
 	static String[] gifs = new String[] { "angry.gif", "cake.gif", "cathappy.gif",
 			"catheart.gif", "celebration.gif", "cheers.gif", "confused.gif",
@@ -65,9 +68,9 @@ public class StickerPickerActivity extends ActionBarActivity {
 		StartAppSDK.init(this, "102378373", "205305173", true);
 		prefs = this.getSharedPreferences(
 			      getPackageName()+"_preferences", Context.MODE_PRIVATE);
+         mViewPagerTabsTitles = new String[]{getString(R.string.stickers), getString(R.string.extras)};
+        mViewPagerFragments = new Fragment[]{new StickerFragment(), new ExtraFragment()};
 
-		
-		
 			getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 			getSupportActionBar().setIcon(getResources().getDrawable(R.drawable.ic_hangouts_ab));
 		
@@ -99,10 +102,14 @@ public class StickerPickerActivity extends ActionBarActivity {
 		setContentView(R.layout.activity_fragments);
 		 final ActionBar actionBar = getSupportActionBar();
 		    actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-
-
-		    new StickerFragment();
-		    new StickerFragment();
+        mViewPager = (ViewPager) findViewById(R.id.container);
+        mViewPager.setAdapter(new StatePagerAdapter(getSupportFragmentManager()));
+        mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+            @Override
+            public void onPageSelected(int position) {
+                actionBar.setSelectedNavigationItem(position);
+            }
+        });
 
 		    actionBar.addTab(actionBar.newTab().setText(getString(R.string.stickers)).setTabListener(new TabListener(){
 
@@ -114,7 +121,7 @@ public class StickerPickerActivity extends ActionBarActivity {
 
 				@Override
 				public void onTabSelected(Tab arg0, FragmentTransaction arg1) {
-					getSupportFragmentManager().beginTransaction().replace(R.id.container, new StickerFragment()).commit();
+                    mViewPager.setCurrentItem(arg0.getPosition());
 					
 				}
 
@@ -135,8 +142,8 @@ public class StickerPickerActivity extends ActionBarActivity {
 
 				@Override
 				public void onTabSelected(Tab arg0, FragmentTransaction arg1) {
-					getSupportFragmentManager().beginTransaction().replace(R.id.container, new ExtraFragment()).commit();
-					
+                    mViewPager.setCurrentItem(arg0.getPosition());
+
 				}
 
 				@Override
@@ -196,5 +203,26 @@ public class StickerPickerActivity extends ActionBarActivity {
 				.build();
 		ImageLoader.getInstance().init(config);
 	}
+
+    public class StatePagerAdapter extends FragmentStatePagerAdapter {
+    public StatePagerAdapter (FragmentManager fm) {
+        super(fm);
+    }
+
+    @Override
+    public Fragment getItem(int i) {
+        return mViewPagerFragments[i];
+    }
+
+    @Override
+    public int getCount() {
+        return mViewPagerFragments.length;
+    }
+
+    @Override
+    public CharSequence getPageTitle(int position) {
+        return mViewPagerTabsTitles[position];
+    }
+}
 
 }
