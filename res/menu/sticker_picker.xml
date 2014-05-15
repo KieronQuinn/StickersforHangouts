@@ -1,10 +1,14 @@
-<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
         android:id="@+id/action_about"
         android:orderInCategory="100"
         android:showAsAction="never"
-        android:title="@string/about"/>
-    <item android:visible="false" android:id="@+id/action_show" android:title="@string/show_app" android:showAsAction="never"></item>
-	
+        android:title="@string/about" />
+    <item
+        android:visible="false"
+        android:id="@+id/action_show"
+        android:title="@string/show_app"
+        android:showAsAction="never"></item>
+
 </menu>

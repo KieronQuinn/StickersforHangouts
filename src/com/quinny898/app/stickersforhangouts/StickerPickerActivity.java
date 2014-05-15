@@ -30,78 +30,81 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 public class StickerPickerActivity extends ActionBarActivity {
-	SharedPreferences prefs;
+    SharedPreferences prefs;
     ViewPager mViewPager;
     String[] mViewPagerTabsTitles;
     Fragment[] mViewPagerFragments;
-	static DisplayImageOptions options;
-	static String[] gifs = new String[] { "angry.gif", "cake.gif", "cathappy.gif",
-			"catheart.gif", "celebration.gif", "cheers.gif", "confused.gif",
-			"crying.gif", "doublehighfive.gif", "fist_bump.gif",
-			"flexedarm.gif", "frustrated.gif", "ghost.gif", "haloguy.gif",
-			"happy.gif", "happyblushing.gif", "happycrying.gif",
-			"hearteyed.gif", "joy.gif", "kiss.gif", "lol.gif", "meh.gif",
-			"mumstheword.gif", "music.gif", "ohno.gif", "okay.gif",
-			"omgterrified.gif", "poop.gif", "praying.gif", "princess.gif",
-			"sad.gif", "scared.gif", "sick.gif", "silly.gif", "sleepy.gif",
-			"smirk.gif", "sparklingheart.gif", "sunglasses.gif",
-			"thumbsdown.gif", "thumbsup.gif", "thumpingheart.gif",
-			"waving.gif", "wink.gif", "winter.gif", "worried.gif",
-			"spring.gif", "valentine.gif", "newyear.gif", "irish.gif" };
-	static String[] pngs = new String[] { "angry.png", "cake.png", "cathappy.png",
-			"catheart.png", "celebration.png", "cheers.png", "confused.png",
-			"crying.png", "doublehighfive.png", "fist_bump.png",
-			"flexedarm.png", "frustrated.png", "ghost.png", "haloguy.png",
-			"happy.png", "happyblushing.png", "happycrying.png",
-			"hearteyed.png", "joy.png", "kiss.png", "lol.png", "meh.png",
-			"mumstheword.png", "music.png", "ohno.png", "okay.png",
-			"omgterrified.png", "poop.png", "praying.png", "princess.png",
-			"sad.png", "scared.png", "sick.png", "silly.png", "sleepy.png",
-			"smirk.png", "sparklingheart.png", "sunglasses.png",
-			"thumbsdown.png", "thumbsup.png", "thumpingheart.png",
-			"waving.png", "wink.png", "winter.png", "worried.png",
-			"spring.png", "valentine.png", "newyear.png", "irish.png" };
-	@SuppressLint("NewApi")
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		StartAppSDK.init(this, "102378373", "205305173", true);
-		prefs = this.getSharedPreferences(
-			      getPackageName()+"_preferences", Context.MODE_PRIVATE);
-         mViewPagerTabsTitles = new String[]{getString(R.string.stickers), getString(R.string.extras)};
+    static DisplayImageOptions options;
+    static String[] gifs = new String[]{"angry.gif", "cake.gif", "cathappy.gif",
+            "catheart.gif", "celebration.gif", "cheers.gif", "confused.gif",
+            "crying.gif", "doublehighfive.gif", "fist_bump.gif",
+            "flexedarm.gif", "frustrated.gif", "ghost.gif", "haloguy.gif",
+            "happy.gif", "happyblushing.gif", "happycrying.gif",
+            "hearteyed.gif", "joy.gif", "kiss.gif", "lol.gif", "meh.gif",
+            "mumstheword.gif", "music.gif", "ohno.gif", "okay.gif",
+            "omgterrified.gif", "poop.gif", "praying.gif", "princess.gif",
+            "sad.gif", "scared.gif", "sick.gif", "silly.gif", "sleepy.gif",
+            "smirk.gif", "sparklingheart.gif", "sunglasses.gif",
+            "thumbsdown.gif", "thumbsup.gif", "thumpingheart.gif",
+            "waving.gif", "wink.gif", "winter.gif", "worried.gif",
+            "spring.gif", "valentine.gif", "newyear.gif", "irish.gif"};
+    static String[] pngs = new String[]{"angry.png", "cake.png", "cathappy.png",
+            "catheart.png", "celebration.png", "cheers.png", "confused.png",
+            "crying.png", "doublehighfive.png", "fist_bump.png",
+            "flexedarm.png", "frustrated.png", "ghost.png", "haloguy.png",
+            "happy.png", "happyblushing.png", "happycrying.png",
+            "hearteyed.png", "joy.png", "kiss.png", "lol.png", "meh.png",
+            "mumstheword.png", "music.png", "ohno.png", "okay.png",
+            "omgterrified.png", "poop.png", "praying.png", "princess.png",
+            "sad.png", "scared.png", "sick.png", "silly.png", "sleepy.png",
+            "smirk.png", "sparklingheart.png", "sunglasses.png",
+            "thumbsdown.png", "thumbsup.png", "thumpingheart.png",
+            "waving.png", "wink.png", "winter.png", "worried.png",
+            "spring.png", "valentine.png", "newyear.png", "irish.png"};
+
+    @SuppressLint("NewApi")
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        StartAppSDK.init(this, "102378373", "205305173", true);
+        prefs = this.getSharedPreferences(
+                getPackageName() + "_preferences", Context.MODE_PRIVATE);
+        mViewPagerTabsTitles = new String[]{getString(R.string.stickers), getString(R.string.extras)};
         mViewPagerFragments = new Fragment[]{new StickerFragment(), new ExtraFragment()};
 
-			getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-			getSupportActionBar().setIcon(getResources().getDrawable(R.drawable.ic_hangouts_ab));
-		
-		start();
-		
-	}
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setIcon(getResources().getDrawable(R.drawable.ic_hangouts_ab));
 
-	public void about() {
-		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        start();
 
-		alertDialogBuilder.setTitle(getString(R.string.about));
+    }
 
-		alertDialogBuilder.setMessage(
-				Html.fromHtml(getString(R.string.about_text)))
+    public void about() {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 
-		.setPositiveButton(getString(android.R.string.ok),
-				new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int id) {
-						dialog.dismiss();
-					}
-				});
+        alertDialogBuilder.setTitle(getString(R.string.about));
 
-		AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialogBuilder.setMessage(
+                Html.fromHtml(getString(R.string.about_text)))
 
-		alertDialog.show();
+                .setPositiveButton(getString(android.R.string.ok),
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.dismiss();
+                            }
+                        }
+                );
 
-	}
-	public void start(){
-		setContentView(R.layout.activity_fragments);
-		 final ActionBar actionBar = getSupportActionBar();
-		    actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+        AlertDialog alertDialog = alertDialogBuilder.create();
+
+        alertDialog.show();
+
+    }
+
+    public void start() {
+        setContentView(R.layout.activity_fragments);
+        final ActionBar actionBar = getSupportActionBar();
+        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(new StatePagerAdapter(getSupportFragmentManager()));
         mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
@@ -111,118 +114,120 @@ public class StickerPickerActivity extends ActionBarActivity {
             }
         });
 
-		    actionBar.addTab(actionBar.newTab().setText(getString(R.string.stickers)).setTabListener(new TabListener(){
+        actionBar.addTab(actionBar.newTab().setText(getString(R.string.stickers)).setTabListener(new TabListener() {
 
-				@Override
-				public void onTabReselected(Tab arg0, FragmentTransaction arg1) {
-					
-					
-				}
+            @Override
+            public void onTabReselected(Tab arg0, FragmentTransaction arg1) {
 
-				@Override
-				public void onTabSelected(Tab arg0, FragmentTransaction arg1) {
-                    mViewPager.setCurrentItem(arg0.getPosition());
-					
-				}
 
-				@Override
-				public void onTabUnselected(Tab arg0, FragmentTransaction arg1) {
-					
-					
-				}
-		    	
-		    }));
-		    actionBar.addTab(actionBar.newTab().setText(getString(R.string.extras)).setTabListener(new TabListener(){
+            }
 
-				@Override
-				public void onTabReselected(Tab arg0, FragmentTransaction arg1) {
-					
-					
-				}
+            @Override
+            public void onTabSelected(Tab arg0, FragmentTransaction arg1) {
+                mViewPager.setCurrentItem(arg0.getPosition());
 
-				@Override
-				public void onTabSelected(Tab arg0, FragmentTransaction arg1) {
-                    mViewPager.setCurrentItem(arg0.getPosition());
+            }
 
-				}
+            @Override
+            public void onTabUnselected(Tab arg0, FragmentTransaction arg1) {
 
-				@Override
-				public void onTabUnselected(Tab arg0, FragmentTransaction arg1) {
-					
-					
-				}
-		    	
-		    }));
 
-	}
+            }
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.sticker_picker, menu);
-		/*
+        }));
+        actionBar.addTab(actionBar.newTab().setText(getString(R.string.extras)).setTabListener(new TabListener() {
+
+            @Override
+            public void onTabReselected(Tab arg0, FragmentTransaction arg1) {
+
+
+            }
+
+            @Override
+            public void onTabSelected(Tab arg0, FragmentTransaction arg1) {
+                mViewPager.setCurrentItem(arg0.getPosition());
+
+            }
+
+            @Override
+            public void onTabUnselected(Tab arg0, FragmentTransaction arg1) {
+
+
+            }
+
+        }));
+
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.sticker_picker, menu);
+        /*
 		 * May be re-implemented later
 		 * 
 		 * try{ 
 		animateItem = menu.findItem(R.id.animate);
 		animateItem.setChecked(prefs.getBoolean("animate", true));
 		}catch(Exception e){}*/
-		try{
-			MenuItem showApp = menu.findItem(R.id.action_show);
-			int state = getPackageManager().getComponentEnabledSetting(new ComponentName(this, MainActivity.class));
-			if(state == PackageManager.COMPONENT_ENABLED_STATE_DISABLED){
-			showApp.setVisible(true);
-			}
-			}catch(Exception e){}
-		return true;
-	}
+        try {
+            MenuItem showApp = menu.findItem(R.id.action_show);
+            int state = getPackageManager().getComponentEnabledSetting(new ComponentName(this, MainActivity.class));
+            if (state == PackageManager.COMPONENT_ENABLED_STATE_DISABLED) {
+                showApp.setVisible(true);
+            }
+        } catch (Exception e) {
+        }
+        return true;
+    }
 
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-		case R.id.action_about:
-			about();
-			break;
-		case android.R.id.home:
-			finish();
-			break;
-		case R.id.action_show:
-		    PackageManager pm = getPackageManager(); 
-			pm.setComponentEnabledSetting(new ComponentName(this, MainActivity.class),
-                    PackageManager.COMPONENT_ENABLED_STATE_ENABLED, PackageManager.DONT_KILL_APP);
-		    Toast.makeText(this, getString(R.string.reboot), Toast.LENGTH_LONG).show();
-			break;
-		
-		}
-		return false;
-	}
-	public static void initImageLoader(Context context) {
-		ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(context)
-				.threadPriority(Thread.NORM_PRIORITY - 2)
-				.denyCacheImageMultipleSizesInMemory()
-				.discCacheFileNameGenerator(new Md5FileNameGenerator())
-				.tasksProcessingOrder(QueueProcessingType.LIFO)
-				.build();
-		ImageLoader.getInstance().init(config);
-	}
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_about:
+                about();
+                break;
+            case android.R.id.home:
+                finish();
+                break;
+            case R.id.action_show:
+                PackageManager pm = getPackageManager();
+                pm.setComponentEnabledSetting(new ComponentName(this, MainActivity.class),
+                        PackageManager.COMPONENT_ENABLED_STATE_ENABLED, PackageManager.DONT_KILL_APP);
+                Toast.makeText(this, getString(R.string.reboot), Toast.LENGTH_LONG).show();
+                break;
+
+        }
+        return false;
+    }
+
+    public static void initImageLoader(Context context) {
+        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(context)
+                .threadPriority(Thread.NORM_PRIORITY - 2)
+                .denyCacheImageMultipleSizesInMemory()
+                .discCacheFileNameGenerator(new Md5FileNameGenerator())
+                .tasksProcessingOrder(QueueProcessingType.LIFO)
+                .build();
+        ImageLoader.getInstance().init(config);
+    }
 
     public class StatePagerAdapter extends FragmentStatePagerAdapter {
-    public StatePagerAdapter (FragmentManager fm) {
-        super(fm);
-    }
+        public StatePagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
 
-    @Override
-    public Fragment getItem(int i) {
-        return mViewPagerFragments[i];
-    }
+        @Override
+        public Fragment getItem(int i) {
+            return mViewPagerFragments[i];
+        }
 
-    @Override
-    public int getCount() {
-        return mViewPagerFragments.length;
-    }
+        @Override
+        public int getCount() {
+            return mViewPagerFragments.length;
+        }
 
-    @Override
-    public CharSequence getPageTitle(int position) {
-        return mViewPagerTabsTitles[position];
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return mViewPagerTabsTitles[position];
+        }
     }
-}
 
 }

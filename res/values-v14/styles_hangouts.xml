@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- File created by the Android Action Bar Style Generator
+<?xml version="1.0" encoding="utf-8"?><!-- File created by the Android Action Bar Style Generator
 
      Copyright (C) 2011 The Android Open Source Project
      Copyright (C) 2012 readyState Software Ltd
@@ -27,10 +26,12 @@
         <item name="android:actionDropDownStyle">@style/DropDownNav.Hangouts</item>
         <item name="android:actionBarStyle">@style/ActionBar.Solid.Hangouts</item>
         <item name="android:actionModeBackground">@drawable/cab_background_top_hangouts</item>
-        <item name="android:actionModeSplitBackground">@drawable/cab_background_bottom_hangouts</item>
-        <item name="android:actionModeCloseButtonStyle">@style/ActionButton.CloseMode.Hangouts</item>
-        
-                <!-- Light.DarkActionBar specific -->
+        <item name="android:actionModeSplitBackground">@drawable/cab_background_bottom_hangouts
+        </item>
+        <item name="android:actionModeCloseButtonStyle">@style/ActionButton.CloseMode.Hangouts
+        </item>
+
+        <!-- Light.DarkActionBar specific -->
         <item name="android:actionBarWidgetTheme">@style/Theme.Hangouts.Widget</item>
 
     </style>
@@ -46,7 +47,7 @@
         <item name="android:background">@drawable/ab_transparent_hangouts</item>
         <item name="android:progressBarStyle">@style/ProgressBar.Hangouts</item>
     </style>
-    
+
     <!-- this style is only referenced in a Light.DarkActionBar based theme -->
     <style name="Theme.Hangouts.Widget" parent="@style/Theme.AppCompat">
         <item name="android:popupMenuStyle">@style/PopupMenu.Hangouts</item>

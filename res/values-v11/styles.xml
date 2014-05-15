@@ -7,5 +7,7 @@
     <style name="AppBaseTheme" parent="android:Theme.Holo.Light.DialogWhenLarge">
         <!-- API 11 theme customizations can go here. -->
     </style>
- <style name="ProgressBarStyle" parent="@android:style/Widget.Holo.ProgressBar.Horizontal"/>
+
+    <style name="ProgressBarStyle" parent="@android:style/Widget.Holo.ProgressBar.Horizontal" />
+
 </resources>
