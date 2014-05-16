@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="120dip">
@@ -20,5 +19,4 @@
         android:max="100"
         android:layout_gravity="bottom"
         style="@style/ProgressBarStyle" />
-
 </FrameLayout>

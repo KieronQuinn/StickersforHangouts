@@ -1,43 +1,46 @@
-<RelativeLayout xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout 
+    xmlns:tools="http://schemas.android.com/tools" xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content" >
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_above="@+id/startAppBanner"
-        android:fillViewport="true"
-        android:layout_height="match_parent">
+<RelativeLayout 
+    android:layout_above="@+id/startAppBanner"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" >
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+    <!-- <LinearLayout
+        android:layout_centerHorizontal="true"
+        android:id="@+id/toplayout"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical" >
 
-            <GridView
-                android:id="@+id/grid_view"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:numColumns="auto_fit"
-                android:columnWidth="100dp"
-                android:gravity="center"
-                android:stretchMode="columnWidth" />
+    </LinearLayout>-->
+    <GridView 
+    android:id="@+id/grid_view"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:numColumns="auto_fit"
+    android:columnWidth="100dp"
+    
+    android:gravity="center"
+    android:stretchMode="columnWidth" > 
 
-            <ProgressBar
-                android:layout_centerInParent="true"
-                android:id="@+id/loading"
-                style="?android:attr/progressBarStyleLarge"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+	</GridView>
 
-        </RelativeLayout>
-
-    </ScrollView>
-
-    <com.startapp.android.publish.banner.Banner
-        android:id="@+id/startAppBanner"
+    <ProgressBar
+        android:layout_centerInParent="true"
+        android:id="@+id/loading"
+        style="?android:attr/progressBarStyleLarge"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_height="wrap_content" />
 
+</RelativeLayout>
+
+<com.startapp.android.publish.banner.Banner 
+          android:id="@+id/startAppBanner"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignParentBottom="true"
+          android:layout_centerHorizontal="true"/>
 </RelativeLayout>
