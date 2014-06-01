@@ -9,7 +9,9 @@ AppCompat: http://developer.android.com/tools/support-library/features.html
 
 android-gif-drawable: https://github.com/koral--/android-gif-drawable
 
-Android-Univeral-Image-Loader: https://github.com/nostra13/Android-Universal-Image-Loader
+Picasso: https://github.com/square/picasso
+
+Sugar: https://github.com/satyan/sugar
 
 ## Here to remove the ads?
 If you want to build your own personal version without ads, do the following:
