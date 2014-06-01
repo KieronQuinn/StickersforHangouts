@@ -16,7 +16,7 @@ Sugar: https://github.com/satyan/sugar
 ## Here to remove the ads?
 If you want to build your own personal version without ads, do the following:
 
-In "activity_sticker_picker.xml", set the height of the banner to 1px
+In "activity_sticker_picker.xml", set the height of the banner to 1px;
 In "UserFragment.java", remove the segment from "int min = 0;" to the line above "v = ..."
 
 Build your version.
