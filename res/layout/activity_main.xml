@@ -2,67 +2,70 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
-	<com.startapp.android.publish.banner.Banner 
-          android:id="@+id/startAppBanner"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_alignParentBottom="true"
-          android:layout_centerHorizontal="true"/>
-    
+
+    <com.startapp.android.publish.banner.Banner
+        android:id="@+id/startAppBanner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
+
     <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_above="@+id/startAppBanner"
-        android:layout_alignParentTop="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" >
+        android:layout_alignParentTop="true" >
+
         <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" >
-    <ImageView
-        android:contentDescription="@string/app_name"
-        android:id="@+id/imageView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:adjustViewBounds="true"
-        android:layout_centerHorizontal="true"
-        android:src="@drawable/logo" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
 
-    <TextView
-        android:id="@+id/info"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/imageView1"
-        android:layout_centerHorizontal="true"
-        android:text=""
-        android:gravity="center"
-        android:layout_marginBottom="10dp"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
+            <ImageView
+                android:id="@+id/imageView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:adjustViewBounds="true"
+                android:contentDescription="@string/app_name"
+                android:src="@drawable/logo" />
 
-    <Button
-        android:id="@+id/youtube"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        
-        android:layout_below="@+id/info"
-        android:layout_centerHorizontal="true"
-        android:background="@drawable/card_bg"
-        android:drawableLeft="@drawable/ic_action_av_play_over_video"
-        android:onClick="youtube"
-        android:paddingLeft="5dp"
-        android:text="@string/youtube_guide"
-        android:textColor="#323232" />
-    <Button
-        android:id="@+id/hide"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        
-        android:layout_below="@+id/youtube"
-        android:layout_centerHorizontal="true"
-        android:background="@drawable/card_bg"
-       	android:layout_marginTop="5dp"
-        android:onClick="hide"
-        android:text="@string/hide"
-        android:textColor="#323232" />
-    </RelativeLayout>
- </ScrollView>
+            <TextView
+                android:id="@+id/info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/imageView1"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="10dp"
+                android:gravity="center"
+                android:text=""
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <Button
+                android:id="@+id/youtube"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/info"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/card_bg"
+                android:drawableLeft="@drawable/ic_action_av_play_over_video"
+                android:onClick="youtube"
+                android:paddingLeft="5dp"
+                android:text="@string/youtube_guide"
+                android:textColor="#323232" />
+
+            <Button
+                android:id="@+id/hide"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/youtube"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/card_bg"
+                android:onClick="hide"
+                android:text="@string/hide"
+                android:textColor="#323232" />
+        </RelativeLayout>
+    </ScrollView>
+
 </RelativeLayout>

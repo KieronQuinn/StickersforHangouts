@@ -11,18 +11,24 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
+import com.startapp.android.publish.StartAppAd;
 import com.startapp.android.publish.StartAppSDK;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.provider.MediaStore;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
+import android.database.Cursor;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -36,6 +42,7 @@ import android.text.Html;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 public class StickerPickerActivity extends ActionBarActivity {
@@ -43,7 +50,11 @@ public class StickerPickerActivity extends ActionBarActivity {
 	ViewPager mViewPager;
 	String[] mViewPagerTabsTitles;
 	Fragment[] mViewPagerFragments;
+	boolean isUserFragment;
+	static ActionBarActivity activity;
 	static DisplayImageOptions options;
+	private StartAppAd startAppAd = new StartAppAd(this);
+	static StartAppAd saa;
 	static String[] gifs = new String[] { "angry.gif", "cake.gif",
 			"cathappy.gif", "catheart.gif", "celebration.gif", "cheers.gif",
 			"confused.gif", "crying.gif", "doublehighfive.gif",
@@ -70,18 +81,17 @@ public class StickerPickerActivity extends ActionBarActivity {
 			"thumbsdown.png", "thumbsup.png", "thumpingheart.png",
 			"waving.png", "wink.png", "winter.png", "worried.png",
 			"spring.png", "valentine.png", "newyear.png", "irish.png" };
+	static Fragment userFragment;
 
 	@SuppressLint("NewApi")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		activity = this;
+		saa = startAppAd;
 		StartAppSDK.init(this, "102378373", "205305173", true);
 		prefs = this.getSharedPreferences(getPackageName() + "_preferences",
 				Context.MODE_PRIVATE);
-		mViewPagerTabsTitles = new String[] { getString(R.string.stickers),
-				getString(R.string.extras) };
-		mViewPagerFragments = new Fragment[] { new StickerFragment(),
-				new ExtraFragment() };
 
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		getSupportActionBar().setIcon(
@@ -89,6 +99,19 @@ public class StickerPickerActivity extends ActionBarActivity {
 		copyAssets();
 		start();
 
+	}
+
+	static void refreshUserFragment() {
+		Fragment currentFragment = userFragment;
+		FragmentTransaction fragTransaction = activity
+				.getSupportFragmentManager().beginTransaction();
+		fragTransaction.detach(currentFragment);
+		fragTransaction.attach(currentFragment);
+		fragTransaction.commit();
+	}
+
+	public void refreshUserFragment2() {
+		UserFragment.refresh(this);
 	}
 
 	public void about() {
@@ -112,11 +135,33 @@ public class StickerPickerActivity extends ActionBarActivity {
 
 	}
 
+	@Override
+	public void onResume() {
+		super.onResume();
+		startAppAd.onResume();
+	}
+
 	public void start() {
+		StartAppAd.showSlider(this);
+		userFragment = new UserFragment();
+		if (prefs.getBoolean("ponies", true)) {
+			mViewPagerTabsTitles = new String[] { getString(R.string.stickers),
+					getString(R.string.ponies),
+					getString(R.string.your_stickers) };
+			mViewPagerFragments = new Fragment[] { new StickerFragment(),
+					new ExtraFragment(), userFragment };
+		} else {
+			mViewPagerTabsTitles = new String[] { getString(R.string.stickers),
+					getString(R.string.your_stickers) };
+			mViewPagerFragments = new Fragment[] { new StickerFragment(),
+					userFragment };
+		}
 		setContentView(R.layout.activity_fragments);
 		final ActionBar actionBar = getSupportActionBar();
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+		actionBar.removeAllTabs();
 		mViewPager = (ViewPager) findViewById(R.id.container);
+		mViewPager.setOffscreenPageLimit(0);
 		mViewPager
 				.setAdapter(new StatePagerAdapter(getSupportFragmentManager()));
 		mViewPager
@@ -140,7 +185,8 @@ public class StickerPickerActivity extends ActionBarActivity {
 					@Override
 					public void onTabSelected(Tab arg0, FragmentTransaction arg1) {
 						mViewPager.setCurrentItem(arg0.getPosition());
-
+						isUserFragment = false;
+						supportInvalidateOptionsMenu();
 					}
 
 					@Override
@@ -150,7 +196,36 @@ public class StickerPickerActivity extends ActionBarActivity {
 					}
 
 				}));
-		actionBar.addTab(actionBar.newTab().setText(getString(R.string.extras))
+		if (prefs.getBoolean("ponies", true)) {
+			actionBar.addTab(actionBar.newTab()
+					.setText(getString(R.string.ponies))
+					.setTabListener(new TabListener() {
+
+						@Override
+						public void onTabReselected(Tab arg0,
+								FragmentTransaction arg1) {
+
+						}
+
+						@Override
+						public void onTabSelected(Tab arg0,
+								FragmentTransaction arg1) {
+							mViewPager.setCurrentItem(arg0.getPosition());
+							isUserFragment = false;
+							supportInvalidateOptionsMenu();
+
+						}
+
+						@Override
+						public void onTabUnselected(Tab arg0,
+								FragmentTransaction arg1) {
+
+						}
+
+					}));
+		}
+		actionBar.addTab(actionBar.newTab()
+				.setText(getString(R.string.your_stickers))
 				.setTabListener(new TabListener() {
 
 					@Override
@@ -161,8 +236,13 @@ public class StickerPickerActivity extends ActionBarActivity {
 
 					@Override
 					public void onTabSelected(Tab arg0, FragmentTransaction arg1) {
-						mViewPager.setCurrentItem(arg0.getPosition());
-
+						try {
+							mViewPager.setCurrentItem(arg0.getPosition());
+							isUserFragment = true;
+							supportInvalidateOptionsMenu();
+						} catch (Exception e) {
+							// App has closed, don't want to force close
+						}
 					}
 
 					@Override
@@ -173,6 +253,21 @@ public class StickerPickerActivity extends ActionBarActivity {
 
 				}));
 
+	}
+
+	@Override
+	public void onDestroy() {
+		try {
+			super.onDestroy();
+			File dir = new File(Environment.getExternalStorageDirectory()
+					+ "/temp/");
+			String[] children = dir.list();
+			for (int i = 0; i < children.length; i++) {
+				new File(dir, children[i]).delete();
+			}
+		} catch (Exception e) {
+			// Prevent crashes on exit
+		}
 	}
 
 	private void copyAssets() {
@@ -224,7 +319,11 @@ public class StickerPickerActivity extends ActionBarActivity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.sticker_picker, menu);
+		if (isUserFragment) {
+			getMenuInflater().inflate(R.menu.sticker_picker_user, menu);
+		} else {
+			getMenuInflater().inflate(R.menu.sticker_picker, menu);
+		}
 		/*
 		 * May be re-implemented later
 		 * 
@@ -243,6 +342,35 @@ public class StickerPickerActivity extends ActionBarActivity {
 		} catch (Exception e) {
 		}
 		return true;
+	}
+
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (requestCode == UserFragment.IMAGE_PICKER_SELECT
+				&& resultCode == Activity.RESULT_OK) {
+			Uri path = data.getData();
+			History h = new History(this, getRealPathFromURI(path));
+			h.save();
+			refreshUserFragment2();
+		}
+		if (requestCode == 1) {
+			start();
+		}
+	}
+
+	private String getRealPathFromURI(Uri contentURI) {
+		String result;
+		Cursor cursor = getContentResolver().query(contentURI, null, null,
+				null, null);
+		if (cursor == null) {
+			result = contentURI.getPath();
+		} else {
+			cursor.moveToFirst();
+			int idx = cursor
+					.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+			result = cursor.getString(idx);
+			cursor.close();
+		}
+		return result;
 	}
 
 	public class StatePagerAdapter extends FragmentStatePagerAdapter {
@@ -274,6 +402,15 @@ public class StickerPickerActivity extends ActionBarActivity {
 		case android.R.id.home:
 			finish();
 			break;
+		case R.id.action_add:
+			UserFragment.addSticker();
+			break;
+		case R.id.action_settings:
+			startActivityForResult(new Intent(this, SettingsActivity.class), 1);
+			break;
+		case R.id.action_clear_all:
+			UserFragment.clearAll();
+			break;
 		case R.id.action_show:
 			PackageManager pm = getPackageManager();
 			pm.setComponentEnabledSetting(new ComponentName(this,
@@ -286,6 +423,10 @@ public class StickerPickerActivity extends ActionBarActivity {
 
 		}
 		return false;
+	}
+
+	public void addSticker(View v) {
+		UserFragment.addSticker();
 	}
 
 	public static void initImageLoader(Context context) {

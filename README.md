@@ -10,3 +10,12 @@ AppCompat: http://developer.android.com/tools/support-library/features.html
 android-gif-drawable: https://github.com/koral--/android-gif-drawable
 
 Android-Univeral-Image-Loader: https://github.com/nostra13/Android-Universal-Image-Loader
+
+## Here to remove the ads?
+If you want to build your own personal version without ads, do the following:
+
+In "activity_sticker_picker.xml", set the height of the banner to 1px
+In "UserFragment.java", remove the segment from "int min = 0;" to the line above "v = ..."
+
+Build your version.
+All I ask if you do this is that you do not share it!

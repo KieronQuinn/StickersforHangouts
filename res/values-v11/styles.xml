@@ -8,4 +8,7 @@
         <!-- API 11 theme customizations can go here. -->
     </style>
  <style name="ProgressBarStyle" parent="@android:style/Widget.Holo.ProgressBar.Horizontal"/>
+ <style name="ButtonHangouts" parent="android:Widget.Holo.Light.Button">
+	  <item name="android:background">@drawable/hangouts_btn_default_holo_light</item>
+  </style>
 </resources>

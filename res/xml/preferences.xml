@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+    <CheckBoxPreference android:summary="@string/show_ponies_info" android:title="@string/show_ponies" android:key="ponies" android:defaultValue="true"/>
+    
+
+</PreferenceScreen>
