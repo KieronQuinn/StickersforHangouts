@@ -6,11 +6,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.startapp.android.publish.StartAppAd;
 import com.startapp.android.publish.StartAppSDK;
 
@@ -52,7 +47,6 @@ public class StickerPickerActivity extends ActionBarActivity {
 	Fragment[] mViewPagerFragments;
 	boolean isUserFragment;
 	static ActionBarActivity activity;
-	static DisplayImageOptions options;
 	private StartAppAd startAppAd = new StartAppAd(this);
 	static StartAppAd saa;
 	static String[] gifs = new String[] { "angry.gif", "cake.gif",
@@ -257,8 +251,8 @@ public class StickerPickerActivity extends ActionBarActivity {
 
 	@Override
 	public void onDestroy() {
+		super.onDestroy();
 		try {
-			super.onDestroy();
 			File dir = new File(Environment.getExternalStorageDirectory()
 					+ "/temp/");
 			String[] children = dir.list();
@@ -429,13 +423,6 @@ public class StickerPickerActivity extends ActionBarActivity {
 		UserFragment.addSticker();
 	}
 
-	public static void initImageLoader(Context context) {
-		ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(
-				context).threadPriority(Thread.NORM_PRIORITY - 2)
-				.denyCacheImageMultipleSizesInMemory()
-				.discCacheFileNameGenerator(new Md5FileNameGenerator())
-				.tasksProcessingOrder(QueueProcessingType.LIFO).build();
-		ImageLoader.getInstance().init(config);
-	}
+	
 
 }

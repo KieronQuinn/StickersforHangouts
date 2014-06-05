@@ -14,6 +14,7 @@ import pl.droidsonroids.gif.GifImageView;
 
 import com.squareup.picasso.Picasso;
 import com.startapp.android.publish.StartAppAd;
+import com.startapp.android.publish.StartAppSDK;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
@@ -61,6 +62,7 @@ public class UserFragment extends Fragment {
 		c = (ActionBarActivity) getActivity();
 		images = History.listAll(History.class);
 		StartAppAd startAppAd = StickerPickerActivity.saa;
+		StartAppSDK.init(getActivity(), "102378373", "205305173", true);
 		new CopyFiles().execute();
 		int Min = 0;
 		int Max = 3;

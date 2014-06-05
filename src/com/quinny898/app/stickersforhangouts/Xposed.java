@@ -23,7 +23,7 @@ public class Xposed implements IXposedHookLoadPackage {
 		if (!lpparam.packageName.equals("com.google.android.talk"))
 			return;
 
-		findAndHookMethod("com.google.android.apps.babel.util.bi",
+		findAndHookMethod("com.google.android.apps.babel.util.bh",
 				lpparam.classLoader, "b", boolean.class, boolean.class,
 				boolean.class, new XC_MethodHook() {
 					@Override
@@ -32,10 +32,10 @@ public class Xposed implements IXposedHookLoadPackage {
 						mButtonPosition = (Integer) XposedHelpers.callMethod(
 								param.thisObject, "getCount");
 						XposedHelpers.callMethod(param.thisObject, "e",
-								"Add sticker", 2130838672, mButtonPosition);
+								"Add sticker", 2130838676, mButtonPosition);
 					}
 				});
-		findAndHookMethod("com.google.android.apps.babel.views.av",
+		findAndHookMethod("com.google.android.apps.babel.views.at",
 				lpparam.classLoader, "onClick", DialogInterface.class,
 				int.class, new XC_MethodHook() {
 					@Override
@@ -45,8 +45,8 @@ public class Xposed implements IXposedHookLoadPackage {
 							Class<?> composeMessageViewClass = findClass(
 									"com.google.android.apps.babel.views.ComposeMessageView",
 									lpparam.classLoader);
-							Object aIx = getObjectField(param.thisObject, "aIX");
-							Object asL = getObjectField(aIx, "asL");
+							Object aIx = getObjectField(param.thisObject, "biG");
+							Object asL = getObjectField(aIx, "aPk");
 							Object conversationFragment = callStaticMethod(
 									composeMessageViewClass, "e", asL);
 							final ComponentName cn = new ComponentName(
