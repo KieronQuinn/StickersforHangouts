@@ -1341,6 +1341,7 @@ containing a value of this type.
         public static final int close=0x7f080020;
         public static final int delete=0x7f080032;
         public static final int deleting=0x7f08002e;
+        public static final int error_download=0x7f080036;
         public static final int extras=0x7f080024;
         public static final int hide=0x7f080019;
         public static final int how_to_show=0x7f08001a;

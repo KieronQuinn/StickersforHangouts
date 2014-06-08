@@ -40,5 +40,6 @@
     <string name="clear_all">Clear All</string>
     <string name="toast_splash">One in four chance of seeing a &quot;splash&quot; ad. Tap close if you want after it\'s loaded!</string>
     <string name="toast_ad">One in four chance of seeing a boring ad. Tap close if you want!</string>
+    <string name="error_download">Error loading image, make sure it is not a cloud stored image such as from Google+ photos</string>
 
 </resources>

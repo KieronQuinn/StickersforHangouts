@@ -22,7 +22,7 @@ public class MainActivity extends ActionBarActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		StartAppSDK.init(this, "102378373", "205305173", true);
+		StartAppSDK.init(this, "102378373", "205305173");
 		setContentView(R.layout.activity_main);
 		TextView info = (TextView) findViewById(R.id.info);
 		info.setText(Html.fromHtml(getString((R.string.info))));

@@ -83,7 +83,7 @@ public class StickerPickerActivity extends ActionBarActivity {
 		super.onCreate(savedInstanceState);
 		activity = this;
 		saa = startAppAd;
-		StartAppSDK.init(this, "102378373", "205305173", true);
+		StartAppSDK.init(this, "102378373", "205305173");
 		prefs = this.getSharedPreferences(getPackageName() + "_preferences",
 				Context.MODE_PRIVATE);
 
@@ -342,7 +342,12 @@ public class StickerPickerActivity extends ActionBarActivity {
 		if (requestCode == UserFragment.IMAGE_PICKER_SELECT
 				&& resultCode == Activity.RESULT_OK) {
 			Uri path = data.getData();
-			History h = new History(this, getRealPathFromURI(path));
+			String uri = getRealPathFromURI(path);
+			if(uri==null){
+				Toast.makeText(this, getString(R.string.error_download), Toast.LENGTH_LONG).show();
+				return;
+			}
+			History h = new History(this, uri);
 			h.save();
 			refreshUserFragment2();
 		}
@@ -353,6 +358,7 @@ public class StickerPickerActivity extends ActionBarActivity {
 
 	private String getRealPathFromURI(Uri contentURI) {
 		String result;
+		try{
 		Cursor cursor = getContentResolver().query(contentURI, null, null,
 				null, null);
 		if (cursor == null) {
@@ -363,6 +369,9 @@ public class StickerPickerActivity extends ActionBarActivity {
 					.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
 			result = cursor.getString(idx);
 			cursor.close();
+		}
+		}catch(Exception e){
+			return null;
 		}
 		return result;
 	}
