@@ -65,9 +65,15 @@ public class PaintActivity extends ActionBarActivity {
 	}
 	public void eraser(View v){
 		canvas.setColor(Color.WHITE);
+		ImageButton other = (ImageButton) findViewById(R.id.ImageButton01);
+		other.setBackgroundResource(R.drawable.paint_rounded_corners);
+		v.setBackgroundResource(R.drawable.paint_rounded_corners_sel);
 	}
 	public void pencil(View v){
 		canvas.setColor(mSelectedColorCal0);
+		ImageButton other = (ImageButton) findViewById(R.id.button1);
+		other.setBackgroundResource(R.drawable.paint_rounded_corners);
+		v.setBackgroundResource(R.drawable.paint_rounded_corners_sel);
 	}
 	public void penalpha100(View v){
 		canvas.setAlpha(100);
@@ -83,24 +89,48 @@ public class PaintActivity extends ActionBarActivity {
 	}
 	public void pencircle(View v){
 		canvas.setStrokeType(true);
+		ImageButton other = (ImageButton) findViewById(R.id.ImageButton02);
+		other.setBackgroundResource(R.drawable.paint_rounded_corners_right);
+		v.setBackgroundResource(R.drawable.paint_rounded_corners_left_sel);
 	}
 	public void pensquare(View v){
 		canvas.setStrokeType(false);
+		ImageButton other = (ImageButton) findViewById(R.id.ImageButton03);
+		other.setBackgroundResource(R.drawable.paint_rounded_corners_left);
+		v.setBackgroundResource(R.drawable.paint_rounded_corners_right_sel);
 	}
 	public void pensize05(View v){
 		canvas.setStrokeWidth(1f);
+		resetSizeButtons();
+		v.setBackgroundResource(R.drawable.paint_rounded_corners_left_sel);
 	}
 	public void pensize25(View v){
 		canvas.setStrokeWidth(3f);
+		resetSizeButtons();
+		v.setBackgroundColor(Color.parseColor("#999999"));
 	}
 	public void pensize45(View v){
 		canvas.setStrokeWidth(5f);
+		resetSizeButtons();
+		v.setBackgroundColor(Color.parseColor("#999999"));
 	}
 	public void pensize75(View v){
 		canvas.setStrokeWidth(8f);
+		resetSizeButtons();
+		v.setBackgroundResource(R.drawable.paint_rounded_corners_right_sel);
 	}
 	public void cancel(View v){
 		finish();
+	}
+	public void resetSizeButtons(){
+		ImageButton b1 = (ImageButton) findViewById(R.id.ImageButton05);
+		ImageButton b2 = (ImageButton) findViewById(R.id.ImageButton07);
+		ImageButton b3 = (ImageButton) findViewById(R.id.ImageButton08);
+		ImageButton b4 = (ImageButton) findViewById(R.id.ImageButton06);
+		b1.setBackgroundResource(R.drawable.paint_rounded_corners_left);
+		b2.setBackgroundColor(Color.parseColor("#c5c5c5"));
+		b3.setBackgroundColor(Color.parseColor("#c5c5c5"));
+		b4.setBackgroundResource(R.drawable.paint_rounded_corners_right);
 	}
 	public void send(View v){
 		try {

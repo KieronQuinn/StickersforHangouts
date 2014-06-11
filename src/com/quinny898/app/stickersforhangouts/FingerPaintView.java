@@ -10,6 +10,7 @@ import java.util.List;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Bitmap.Config;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -109,10 +110,11 @@ public class FingerPaintView extends View {
 		paint.setStrokeJoin(Paint.Join.ROUND);
 		paint.setStrokeCap(Paint.Cap.ROUND);
 		paint.setStrokeWidth(1.6f);
+		int pixel = 200;
+		final float scale = getResources().getDisplayMetrics().density;
+		int dip = (int) (pixel* scale + 0.5f);
 
-		InputStream stream = getResources().openRawResource(R.drawable.blank);
-
-		originBitmap = BitmapFactory.decodeStream(stream);
+		originBitmap = Bitmap.createBitmap(dip, dip, Config.ARGB_8888);
 
 		int width = originBitmap.getWidth();
 

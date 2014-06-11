@@ -30,10 +30,10 @@ public final class R {
 		public static final int text_size_medium = 0x7f060006;
 	}
 	public static final class drawable {
-		public static final int calendar_color_picker_swatch = 0x7f020064;
-		public static final int calendar_color_square = 0x7f020065;
-		public static final int ic_colorpicker_swatch_selected = 0x7f02007a;
-		public static final int ic_launcher_ = 0x7f02007e;
+		public static final int calendar_color_picker_swatch = 0x7f020063;
+		public static final int calendar_color_square = 0x7f020064;
+		public static final int ic_colorpicker_swatch_selected = 0x7f020079;
+		public static final int ic_launcher_ = 0x7f02007d;
 	}
 	public static final class id {
 		public static final int back_button = 0x7f0b0068;

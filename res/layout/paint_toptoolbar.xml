@@ -25,8 +25,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:background="@null"
             android:onClick="pencil"
+            android:background="@drawable/paint_rounded_corners_sel"
             android:src="@drawable/ic_pencil" />
 
         <ImageButton
@@ -35,7 +35,7 @@
             android:layout_height="wrap_content"
             android:src="@drawable/ic_eraser"
             android:layout_marginLeft="10dp"
-            android:background="@null"
+            android:background="@drawable/paint_rounded_corners"
             android:onClick="eraser"
             />
 
@@ -62,7 +62,7 @@
                     android:id="@+id/ImageButton05"
                     android:layout_width="25dp"
                     android:layout_height="25dp"
-                    android:background="@drawable/paint_rounded_corners_left"
+                    android:background="@drawable/paint_rounded_corners_left_sel"
                     android:onClick="pensize05"
                     android:src="@drawable/pensize05" />
 
@@ -102,7 +102,7 @@
                     android:id="@+id/penalpha100"
                     android:layout_width="25dp"
                     android:layout_height="25dp"
-                    android:background="@drawable/paint_rounded_corners_left"
+                    android:background="@drawable/paint_rounded_corners_left_sel"
                     android:onClick="penalpha100"
                     android:src="@drawable/penalpha100" />
 
@@ -142,7 +142,7 @@
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:onClick="pencircle"
-                    android:background="@drawable/paint_rounded_corners_left"
+                    android:background="@drawable/paint_rounded_corners_left_sel"
                     android:src="@drawable/pencircle" />
 
                 <ImageButton
