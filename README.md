@@ -13,6 +13,8 @@ Picasso: https://github.com/square/picasso
 
 Sugar: https://github.com/satyan/sugar
 
+Modified version of Color Picker Collection to work with Support library: http://d-h.st/KpE (original here: https://github.com/gabrielemariotti/colorpickercollection)
+
 ## Here to remove the ads?
 If you want to build your own personal version without ads, do the following:
 

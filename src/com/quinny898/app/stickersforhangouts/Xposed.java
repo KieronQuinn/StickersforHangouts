@@ -33,6 +33,8 @@ public class Xposed implements IXposedHookLoadPackage {
 								param.thisObject, "getCount");
 						XposedHelpers.callMethod(param.thisObject, "e",
 								"Add sticker", 2130838676, mButtonPosition);
+						XposedHelpers.callMethod(param.thisObject, "e",
+								"Add Drawing", 2130838672, mButtonPosition+1);
 					}
 				});
 		findAndHookMethod("com.google.android.apps.babel.views.at",
@@ -52,6 +54,22 @@ public class Xposed implements IXposedHookLoadPackage {
 							final ComponentName cn = new ComponentName(
 									"com.quinny898.app.stickersforhangouts",
 									"com.quinny898.app.stickersforhangouts.StickerPickerActivity");
+							Intent intent = new Intent().setComponent(cn);
+							callMethod(conversationFragment,
+									"startActivityForResult", intent, 1);
+							param.setResult(null);
+						}
+						if (Integer.parseInt(param.args[1].toString()) == mButtonPosition+1) {
+							Class<?> composeMessageViewClass = findClass(
+									"com.google.android.apps.babel.views.ComposeMessageView",
+									lpparam.classLoader);
+							Object aIx = getObjectField(param.thisObject, "biG");
+							Object asL = getObjectField(aIx, "aPk");
+							Object conversationFragment = callStaticMethod(
+									composeMessageViewClass, "e", asL);
+							final ComponentName cn = new ComponentName(
+									"com.quinny898.app.stickersforhangouts",
+									"com.quinny898.app.stickersforhangouts.PaintActivity");
 							Intent intent = new Intent().setComponent(cn);
 							callMethod(conversationFragment,
 									"startActivityForResult", intent, 1);

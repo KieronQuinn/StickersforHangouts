@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.quinny898.app.stickersforhangouts"
-    android:versionCode="123"
-    android:versionName="1.2.3" >
+    android:versionCode="130"
+    android:versionName="1.3" >
 
     <uses-sdk
         android:minSdkVersion="9"
@@ -80,6 +80,17 @@
         <activity
             android:name="SettingsActivity"
             android:label="@string/settings" >
+        </activity>
+        <activity android:label="@string/add_drawing" android:name="PaintActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.GET_CONTENT" />
+                <action android:name="com.quinny898.app.stickersforhangouts.DRAWING" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.OPENABLE" />
+
+                <data android:mimeType="image/*" />
+            </intent-filter>
         </activity>
     </application>
 

@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:background="#e5e5e5"
+        android:padding="5dp" >
+
+        <ImageButton
+            android:id="@+id/colorpicker"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:onClick="colorpicker"
+            android:background="@android:color/black" />
+
+        <ImageButton
+            android:id="@+id/ImageButton01"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:background="@null"
+            android:onClick="pencil"
+            android:src="@drawable/ic_pencil" />
+
+        <ImageButton
+            android:id="@+id/button1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_eraser"
+            android:layout_marginLeft="10dp"
+            android:background="@null"
+            android:onClick="eraser"
+            />
+
+    </LinearLayout>
+
+    <ScrollView
+        android:id="@+id/scrollView1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/linearLayout1"
+        android:background="#e5e5e5"
+        android:padding="5dp" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" >
+
+                <ImageButton
+                    android:id="@+id/ImageButton05"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:background="@drawable/paint_rounded_corners_left"
+                    android:onClick="pensize05"
+                    android:src="@drawable/pensize05" />
+
+                <ImageButton
+                    android:id="@+id/ImageButton07"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:background="#c5c5c5"
+                    android:onClick="pensize25"
+                    android:src="@drawable/pensize25" />
+
+                <ImageButton
+                    android:id="@+id/ImageButton08"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:background="#c5c5c5"
+                    android:onClick="pensize45"
+                    android:src="@drawable/pensize45" />
+
+                <ImageButton
+                    android:id="@+id/ImageButton06"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:background="@drawable/paint_rounded_corners_right"
+                    android:onClick="pensize75"
+                    android:src="@drawable/pensize75" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:visibility="gone"
+                android:layout_marginLeft="5dp"
+                 >
+
+                <ImageButton
+                    android:id="@+id/penalpha100"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:background="@drawable/paint_rounded_corners_left"
+                    android:onClick="penalpha100"
+                    android:src="@drawable/penalpha100" />
+
+                <ImageButton
+                    android:id="@+id/penalpha75"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:background="#c5c5c5"
+                    android:onClick="penalpha75"
+                    android:src="@drawable/penalpha75" />
+
+                <ImageButton
+                    android:id="@+id/penalpha50"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:background="#c5c5c5"
+                    android:onClick="penalpha50"
+                    android:src="@drawable/penalpha50" />
+
+                <ImageButton
+                    android:id="@+id/penalpha25"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:background="@drawable/paint_rounded_corners_right"
+                    android:onClick="penalpha25"
+                    android:src="@drawable/penalpha25" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="5dp"
+                 >
+
+                <ImageButton
+                    android:id="@+id/ImageButton03"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:onClick="pencircle"
+                    android:background="@drawable/paint_rounded_corners_left"
+                    android:src="@drawable/pencircle" />
+
+                <ImageButton
+                    android:id="@+id/ImageButton02"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:background="@drawable/paint_rounded_corners_right"
+                    android:onClick="pensquare"
+                    android:src="@drawable/pensquare" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <View
+        android:id="@+id/view1"
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/linearLayout1"
+        android:background="#c5c5c5" />
+
+    <View
+        android:id="@+id/View01"
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/scrollView1"
+        android:background="#c5c5c5" />
+
+</RelativeLayout>
