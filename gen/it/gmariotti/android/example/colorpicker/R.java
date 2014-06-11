@@ -38,17 +38,17 @@ public final class R {
 	public static final class id {
 		public static final int back_button = 0x7f0b0068;
 		public static final int button_bar = 0x7f0b0067;
-		public static final int calendar_color_view = 0x7f0b0052;
-		public static final int color_grid = 0x7f0b0053;
-		public static final int color_picker = 0x7f0b004f;
-		public static final int color_picker_checkmark = 0x7f0b0051;
-		public static final int color_picker_swatch = 0x7f0b0050;
-		public static final int color_view = 0x7f0b0054;
+		public static final int calendar_color_view = 0x7f0b0053;
+		public static final int color_grid = 0x7f0b0054;
+		public static final int color_picker = 0x7f0b0050;
+		public static final int color_picker_checkmark = 0x7f0b0052;
+		public static final int color_picker_swatch = 0x7f0b0051;
+		public static final int color_view = 0x7f0b0055;
 		public static final int menu_about = 0x7f0b006c;
-		public static final int menurow_square = 0x7f0b0057;
-		public static final int menurow_title = 0x7f0b0058;
+		public static final int menurow_square = 0x7f0b0058;
+		public static final int menurow_title = 0x7f0b0059;
 		public static final int next_button = 0x7f0b006a;
-		public static final int ns_menu_row = 0x7f0b0056;
+		public static final int ns_menu_row = 0x7f0b0057;
 		public static final int skip_button = 0x7f0b0069;
 	}
 	public static final class integer {

@@ -43,5 +43,7 @@
     <string name="error_download">Error loading image, make sure it is not a cloud stored image such as from Google+ photos</string>
     <string name="send">Send</string>
     <string name="add_drawing">Add Drawing</string>
+    <string name="disable_toast">Disable Toast</string>
+    <string name="disable_toast_info">Disable the toast that accompanies the ads</string>
 
 </resources>

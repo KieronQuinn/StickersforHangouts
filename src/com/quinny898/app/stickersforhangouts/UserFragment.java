@@ -61,6 +61,12 @@ public class UserFragment extends Fragment {
 		activity = (ActionBarActivity) getActivity();
 		c = (ActionBarActivity) getActivity();
 		images = History.listAll(History.class);
+		final SharedPreferences prefs = getActivity().getSharedPreferences(
+				getActivity().getPackageName() + "_prefs",
+				Context.MODE_PRIVATE);
+		final SharedPreferences prefs2 = getActivity().getSharedPreferences(
+				getActivity().getPackageName() + "_preferences",
+				Context.MODE_PRIVATE);
 		StartAppAd startAppAd = StickerPickerActivity.saa;
 		StartAppSDK.init(getActivity(), "102378373", "205305173");
 		new CopyFiles().execute();
@@ -70,13 +76,17 @@ public class UserFragment extends Fragment {
 		if (random == 1) {
 			startAppAd.showAd(); // show the ad
 			startAppAd.loadAd();
+			if(!prefs2.getBoolean("disabletoast", false)){
 			Toast.makeText(getActivity(), getString(R.string.toast_ad),
 					Toast.LENGTH_LONG).show();
+			}
 		}
 		if (random == 3) {
 			StartAppAd.showSplash(getActivity(), savedInstanceState);
+			if(!prefs2.getBoolean("disabletoast", false)){
 			Toast.makeText(getActivity(), getString(R.string.toast_splash),
 					Toast.LENGTH_LONG).show();
+			}
 		}
 		v = inflater.inflate(R.layout.activity_sticker_picker, null);
 
@@ -106,9 +116,7 @@ public class UserFragment extends Fragment {
 			public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
 					final int arg2, long arg3) {
 				// Stop showing "Long click for preview" crouton
-				SharedPreferences prefs = getActivity().getSharedPreferences(
-						getActivity().getPackageName() + "_prefs",
-						Context.MODE_PRIVATE);
+				
 				prefs.edit().putBoolean("show_crouton", false).commit();
 				AlertDialog.Builder builder = new AlertDialog.Builder(
 						getActivity());

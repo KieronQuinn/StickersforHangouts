@@ -81,7 +81,7 @@
             android:name="SettingsActivity"
             android:label="@string/settings" >
         </activity>
-        <activity android:label="@string/add_drawing" android:name="PaintActivity">
+        <activity android:configChanges="keyboardHidden|orientation|screenSize" android:label="@string/add_drawing" android:name="PaintActivity">
             <intent-filter>
                 <action android:name="android.intent.action.GET_CONTENT" />
                 <action android:name="com.quinny898.app.stickersforhangouts.DRAWING" />
