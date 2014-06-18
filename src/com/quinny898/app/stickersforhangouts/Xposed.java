@@ -23,7 +23,7 @@ public class Xposed implements IXposedHookLoadPackage {
 		if (!lpparam.packageName.equals("com.google.android.talk"))
 			return;
 
-		findAndHookMethod("com.google.android.apps.babel.util.bh",
+		findAndHookMethod("com.google.android.apps.babel.util.b",
 				lpparam.classLoader, "b", boolean.class, boolean.class,
 				boolean.class, new XC_MethodHook() {
 					@Override
@@ -31,13 +31,13 @@ public class Xposed implements IXposedHookLoadPackage {
 							throws Throwable {
 						mButtonPosition = (Integer) XposedHelpers.callMethod(
 								param.thisObject, "getCount");
-						XposedHelpers.callMethod(param.thisObject, "e",
+						XposedHelpers.callMethod(param.thisObject, "c",
 								"Add sticker", 2130838676, mButtonPosition);
-						XposedHelpers.callMethod(param.thisObject, "e",
+						XposedHelpers.callMethod(param.thisObject, "c",
 								"Add Drawing", 2130838672, mButtonPosition+1);
 					}
 				});
-		findAndHookMethod("com.google.android.apps.babel.views.at",
+		findAndHookMethod("com.google.android.apps.babel.views.x",
 				lpparam.classLoader, "onClick", DialogInterface.class,
 				int.class, new XC_MethodHook() {
 					@Override
@@ -47,8 +47,8 @@ public class Xposed implements IXposedHookLoadPackage {
 							Class<?> composeMessageViewClass = findClass(
 									"com.google.android.apps.babel.views.ComposeMessageView",
 									lpparam.classLoader);
-							Object aIx = getObjectField(param.thisObject, "biG");
-							Object asL = getObjectField(aIx, "aPk");
+							Object aIx = getObjectField(param.thisObject, "auP");
+							Object asL = getObjectField(aIx, "auO");
 							Object conversationFragment = callStaticMethod(
 									composeMessageViewClass, "e", asL);
 							final ComponentName cn = new ComponentName(
@@ -63,8 +63,8 @@ public class Xposed implements IXposedHookLoadPackage {
 							Class<?> composeMessageViewClass = findClass(
 									"com.google.android.apps.babel.views.ComposeMessageView",
 									lpparam.classLoader);
-							Object aIx = getObjectField(param.thisObject, "biG");
-							Object asL = getObjectField(aIx, "aPk");
+							Object aIx = getObjectField(param.thisObject, "auP");
+							Object asL = getObjectField(aIx, "auO");
 							Object conversationFragment = callStaticMethod(
 									composeMessageViewClass, "e", asL);
 							final ComponentName cn = new ComponentName(
