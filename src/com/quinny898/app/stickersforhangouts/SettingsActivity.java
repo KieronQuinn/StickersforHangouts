@@ -7,32 +7,32 @@ import android.view.MenuItem;
 
 public class SettingsActivity extends ActionBarActivity {
 
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_settings);
-		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-		getSupportFragmentManager().beginTransaction()
-				.replace(R.id.container, new PrefsFragment()).commit();
-	}
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_settings);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.container, new PrefsFragment()).commit();
+    }
 
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-		case android.R.id.home:
-			finish();
-			break;
-		}
-		return false;
-	}
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                break;
+        }
+        return false;
+    }
 
-	public static class PrefsFragment extends PreferenceFragment {
+    public static class PrefsFragment extends PreferenceFragment {
 
-		@Override
-		public void onCreate(Bundle savedInstanceState) {
-			super.onCreate(savedInstanceState);
-			addPreferencesFromResource(R.xml.preferences);
+        @Override
+        public void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            addPreferencesFromResource(R.xml.preferences);
 
-		}
+        }
 
-	}
+    }
 }
