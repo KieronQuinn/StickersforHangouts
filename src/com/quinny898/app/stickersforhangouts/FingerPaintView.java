@@ -89,6 +89,16 @@ public class FingerPaintView extends View {
 	    Bitmap bbicon = get();
 	    try {
 	     outStream = new FileOutputStream(file);
+
+         Bitmap scaledBitmap = Bitmap.createBitmap(200, 200, Config.ARGB_8888);
+         float ratio = 200 / (float) bbicon.getWidth();
+         float middle = 200 / 2.0f;
+         Matrix scaleMatrix = new Matrix();
+         scaleMatrix.setScale(ratio, ratio, middle, middle);
+         Canvas canvas = new Canvas(scaledBitmap);
+         canvas.setMatrix(scaleMatrix);
+         canvas.drawBitmap(bbicon, middle - bbicon.getWidth() / 2, middle - bbicon.getHeight() / 2, new Paint(Paint.FILTER_BITMAP_FLAG));
+
 	     bbicon.compress(Bitmap.CompressFormat.PNG, 100, outStream);
 	     outStream.flush();
 	     outStream.close();
