@@ -47,8 +47,8 @@ public class Xposed implements IXposedHookLoadPackage {
 							Class<?> composeMessageViewClass = findClass(
 									"com.google.android.apps.babel.views.ComposeMessageView",
 									lpparam.classLoader);
-							Object aIx = getObjectField(param.thisObject, "auP");
-							Object asL = getObjectField(aIx, "auO");
+							Object aIx = getObjectField(param.thisObject, "auR");
+							Object asL = getObjectField(aIx, "auQ");
 							Object conversationFragment = callStaticMethod(
 									composeMessageViewClass, "e", asL);
 							final ComponentName cn = new ComponentName(
@@ -63,8 +63,8 @@ public class Xposed implements IXposedHookLoadPackage {
 							Class<?> composeMessageViewClass = findClass(
 									"com.google.android.apps.babel.views.ComposeMessageView",
 									lpparam.classLoader);
-							Object aIx = getObjectField(param.thisObject, "auP");
-							Object asL = getObjectField(aIx, "auO");
+							Object aIx = getObjectField(param.thisObject, "auR");
+							Object asL = getObjectField(aIx, "auQ");
 							Object conversationFragment = callStaticMethod(
 									composeMessageViewClass, "e", asL);
 							final ComponentName cn = new ComponentName(
