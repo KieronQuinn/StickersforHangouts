@@ -330,7 +330,14 @@ public class UserFragment extends Fragment {
 
 		@Override
 		protected void onPostExecute(String result) {
-			pd.dismiss();
+			try{
+				pd.dismiss();
+			}catch(Exception e){
+				//You useless peanut Pina - random user who reported bug
+				//k dont care - Another random user
+				//mercy - And another
+				//95606 (not a clue) - the last one
+			}
 			if (numberNotExisting != 0) {
 				AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
 						c);

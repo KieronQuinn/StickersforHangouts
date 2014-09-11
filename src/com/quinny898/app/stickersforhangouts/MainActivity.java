@@ -21,12 +21,16 @@ import android.widget.Toast;
 public class MainActivity extends ActionBarActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		StartAppSDK.init(this, "102378373", "205305173");
-		setContentView(R.layout.activity_main);
-		TextView info = (TextView) findViewById(R.id.info);
-		info.setText(Html.fromHtml(getString((R.string.info))));
-
+		try {
+			super.onCreate(savedInstanceState);
+			StartAppSDK.init(this, "102378373", "205305173");
+			setContentView(R.layout.activity_main);
+			TextView info = (TextView) findViewById(R.id.info);
+			info.setText(Html.fromHtml(getString((R.string.info))));
+		} catch (Exception e) {
+			// Apparently, this happens. I don't know why, but it does - blame
+			// Gingerbread.
+		}
 	}
 
 	public void about() {
@@ -89,9 +93,13 @@ public class MainActivity extends ActionBarActivity {
 					Uri.parse("vnd.youtube:" + id));
 			startActivity(intent);
 		} catch (ActivityNotFoundException ex) {
-			Intent intent = new Intent(Intent.ACTION_VIEW,
-					Uri.parse("http://www.youtube.com/watch?v=" + id));
-			startActivity(intent);
+			try {
+				Intent intent = new Intent(Intent.ACTION_VIEW,
+						Uri.parse("http://www.youtube.com/watch?v=" + id));
+				startActivity(intent);
+			} catch (Exception e) {
+				// Seriously - What kind of "smart" phone has no browser?
+			}
 		}
 	}
 }

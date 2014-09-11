@@ -72,10 +72,10 @@
             android:layout_height="wrap_content"
             android:orientation="vertical" >
 
-            <View
+            <com.quinny898.app.stickersforhangouts.SquareView
                 android:id="@+id/canvasBorder"
-                android:layout_width="200dp"
-                android:layout_height="200dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:background="#c5c5c5" />
 			<com.quinny898.app.stickersforhangouts.FingerPaintView
