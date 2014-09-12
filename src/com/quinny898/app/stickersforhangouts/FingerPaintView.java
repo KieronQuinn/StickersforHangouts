@@ -23,232 +23,249 @@ import android.view.MotionEvent;
 import android.view.View;
 
 public class FingerPaintView extends View {
-    Path path;
-    Bitmap bitmapBuff;
-    Paint paint;
-    Paint pen;
-    Canvas canvas;
-    Bitmap originBitmap;
-    Bitmap pureBitmp;
-    private float scaleWidth;
-    private float scaleHeight;
-    private float mX, mY;
-    private static float TOUCH_TOLERANCE = 4;
-    private Canvas printCanvas;
-    Bitmap printBitmapBuff;
-    private List<Path> pathList;
-    int i = 0;
-    private Bitmap printBitmap;
+	Path path;
+	Bitmap bitmapBuff;
+	Paint paint;
+	Paint pen;
+	Canvas canvas;
+	Bitmap originBitmap;
+	Bitmap pureBitmp;
+	private float scaleWidth;
+	private float scaleHeight;
+	private float mX, mY;
+	private static float TOUCH_TOLERANCE = 4;
+	private Canvas printCanvas;
+	Bitmap printBitmapBuff;
+	private List<Path> pathList;
+	int i = 0;
+	private Bitmap printBitmap;
 
-    public FingerPaintView(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        this.setDrawingCacheEnabled(true);
-        loadBitmap(context);
-        Log.i("Context context, AttributeSet attrs", "11");
-    }
+	public FingerPaintView(Context context, AttributeSet attrs) {
+		super(context, attrs);
+		this.setDrawingCacheEnabled(true);
+		loadBitmap(context);
+		Log.i("Context context, AttributeSet attrs", "11");
+	}
 
-    public FingerPaintView(Context context) {
-        super(context);
-        this.setDrawingCacheEnabled(true);
-        loadBitmap(context);
-        Log.i("Context context", "222");
-    }
+	public FingerPaintView(Context context) {
+		super(context);
+		this.setDrawingCacheEnabled(true);
+		loadBitmap(context);
+		Log.i("Context context", "222");
+	}
 
-    public void setColor(int color) {
-        paint.setColor(color);
-    }
+	public void setColor(int color) {
+		paint.setColor(color);
+	}
 
-    public void setStrokeWidth(float width) {
-        paint.setStrokeWidth(width);
-    }
+	public void setStrokeWidth(float width) {
+		paint.setStrokeWidth(width);
+	}
 
-    public void setStrokeType(boolean circle) {
-        if (circle) {
-            paint.setStrokeCap(Paint.Cap.ROUND);
-        } else {
-            paint.setStrokeCap(Paint.Cap.SQUARE);
-        }
-    }
+	public void setStrokeType(boolean circle) {
+		if (circle) {
+			paint.setStrokeCap(Paint.Cap.ROUND);
+		} else {
+			paint.setStrokeCap(Paint.Cap.SQUARE);
+		}
+	}
 
-    public void setAlpha(int alpha) {
-        int color = paint.getColor();
-        int red = (color >> 16) & 0xFF;
-        int green = (color >> 8) & 0xFF;
-        int blue = (color >> 0) & 0xFF;
-        paint.setColor(Color.argb(alpha, red, green, blue));
-    }
+	public void setAlpha(int alpha) {
+		int color = paint.getColor();
+		int red = (color >> 16) & 0xFF;
+		int green = (color >> 8) & 0xFF;
+		int blue = (color >> 0) & 0xFF;
+		paint.setColor(Color.argb(alpha, red, green, blue));
+	}
 
-    public Bitmap get() {
-        return this.getDrawingCache();
-    }
+	public Bitmap get() {
+		return this.getDrawingCache();
+	}
 
-    public void saveToSd() throws IOException {
-        String extStorageDirectory = Environment.getExternalStorageDirectory().toString() + "/Android/data/com.quinny898.app.stickersforhangouts/";
-        OutputStream outStream = null;
-        if (!new File(extStorageDirectory).exists()) new File(extStorageDirectory).mkdirs();
-        File file = new File(extStorageDirectory, "temp.png");
-        if (file.exists()) file.delete();
-        Bitmap bbicon = get();
-        try {
-            outStream = new FileOutputStream(file);
+	public void saveToSd() throws IOException {
+		String extStorageDirectory = Environment.getExternalStorageDirectory()
+				.toString()
+				+ "/Android/data/com.quinny898.app.stickersforhangouts/";
+		OutputStream outStream = null;
+		if (!new File(extStorageDirectory).exists())
+			new File(extStorageDirectory).mkdirs();
+		File file = new File(extStorageDirectory, "temp.png");
+		if (file.exists())
+			file.delete();
+		Bitmap bbicon = get();
+		try {
+			outStream = new FileOutputStream(file);
 
-            Bitmap scaledBitmap = Bitmap.createBitmap(200, 200, Config.ARGB_8888);
-            float ratio = 200 / (float) bbicon.getWidth();
-            float middle = 200 / 2.0f;
-            Matrix scaleMatrix = new Matrix();
-            scaleMatrix.setScale(ratio, ratio, middle, middle);
-            Canvas canvas = new Canvas(scaledBitmap);
-            canvas.setMatrix(scaleMatrix);
-            canvas.drawBitmap(bbicon, middle - bbicon.getWidth() / 2, middle - bbicon.getHeight() / 2, new Paint(Paint.FILTER_BITMAP_FLAG));
+			Bitmap scaledBitmap = Bitmap.createBitmap(200, 200,
+					Config.ARGB_8888);
+			float ratio = 200 / (float) bbicon.getWidth();
+			float middle = 200 / 2.0f;
+			Matrix scaleMatrix = new Matrix();
+			scaleMatrix.setScale(ratio, ratio, middle, middle);
+			Canvas canvas = new Canvas(scaledBitmap);
+			canvas.setMatrix(scaleMatrix);
+			canvas.drawBitmap(bbicon, middle - bbicon.getWidth() / 2, middle
+					- bbicon.getHeight() / 2, new Paint(
+					Paint.FILTER_BITMAP_FLAG));
 
-            bbicon.compress(Bitmap.CompressFormat.PNG, 100, outStream);
-            outStream.flush();
-            outStream.close();
-        } catch (Exception e) {
-        }
-    }
+			bbicon.compress(Bitmap.CompressFormat.PNG, 100, outStream);
+			outStream.flush();
+			outStream.close();
+		} catch (Exception e) {
+		}
+	}
 
-    public void loadBitmap(Context context) {
+	public void loadBitmap(Context context) {
 
-        pathList = new ArrayList<Path>();
-        path = new Path();
-        paint = new Paint();
-        paint.setAntiAlias(true);
-        paint.setDither(true);
-        paint.setColor(Color.BLACK);
-        paint.setStyle(Paint.Style.STROKE);
-        paint.setStrokeJoin(Paint.Join.ROUND);
-        paint.setStrokeCap(Paint.Cap.ROUND);
-        paint.setStrokeWidth(1.6f);
-        int pixel = 200;
-        final float scale = getResources().getDisplayMetrics().density;
-        int dip = (int) (pixel * scale + 0.5f);
+		pathList = new ArrayList<Path>();
+		path = new Path();
+		paint = new Paint();
+		paint.setAntiAlias(true);
+		paint.setDither(true);
+		paint.setColor(Color.BLACK);
+		paint.setStyle(Paint.Style.STROKE);
+		paint.setStrokeJoin(Paint.Join.ROUND);
+		paint.setStrokeCap(Paint.Cap.ROUND);
+		paint.setStrokeWidth(1.6f);
+		int pixel = 200;
+		final float scale = getResources().getDisplayMetrics().density;
+		int dip = (int) (pixel * scale + 0.5f);
 
-        originBitmap = Bitmap.createBitmap(dip, dip, Config.ARGB_8888);
+		originBitmap = Bitmap.createBitmap(dip, dip, Config.ARGB_8888);
 
-        int width = originBitmap.getWidth();
+		int width = originBitmap.getWidth();
 
-        int height = originBitmap.getHeight();
+		int height = originBitmap.getHeight();
 
-        DisplayMetrics metrics = context.getApplicationContext().getResources()
-                .getDisplayMetrics();
+		DisplayMetrics metrics = context.getApplicationContext().getResources()
+				.getDisplayMetrics();
 
-        int newWidth = metrics.widthPixels;
+		int newWidth = metrics.widthPixels;
 
-        int newHeight = metrics.heightPixels;
+		int newHeight = metrics.heightPixels;
 
-        scaleWidth = ((float) newWidth / width);
+		scaleWidth = ((float) newWidth / width);
 
-        scaleHeight = ((float) newHeight / height);
+		scaleHeight = ((float) newHeight / height);
 
-        Matrix matrix = new Matrix();
+		Matrix matrix = new Matrix();
 
-        matrix.postScale(scaleWidth, scaleHeight);
+		matrix.postScale(scaleWidth, scaleHeight);
+		try {
+			pureBitmp = Bitmap.createBitmap(originBitmap, 0, 0, width, height,
+					matrix, true);
+			bitmapBuff = Bitmap.createBitmap(pureBitmp.getWidth(),
+					pureBitmp.getHeight(), Bitmap.Config.ARGB_8888);
 
-        pureBitmp = Bitmap.createBitmap(originBitmap, 0, 0, width, height,
-                matrix, true);
+			canvas = new Canvas(bitmapBuff);
 
-        bitmapBuff = Bitmap.createBitmap(pureBitmp.getWidth(),
-                pureBitmp.getHeight(), Bitmap.Config.ARGB_8888);
+			canvas.drawBitmap(pureBitmp, 0, 0, paint);
+		} catch (OutOfMemoryError e) {
+			System.gc();
+			pureBitmp = Bitmap.createBitmap(originBitmap, 0, 0, width, height,
+					matrix, true);
+			bitmapBuff = Bitmap.createBitmap(pureBitmp.getWidth(),
+					pureBitmp.getHeight(), Bitmap.Config.ARGB_8888);
 
-        canvas = new Canvas(bitmapBuff);
+			canvas = new Canvas(bitmapBuff);
 
-        canvas.drawBitmap(pureBitmp, 0, 0, paint);
+			canvas.drawBitmap(pureBitmp, 0, 0, paint);
+		}
 
-    }
+	}
 
-    public boolean onTouchEvent(MotionEvent event) {
-        float x = event.getX();
-        float y = event.getY();
-        switch (event.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                touchStart(x, y);
-                invalidate();
-                break;
-            case MotionEvent.ACTION_MOVE:
-                touchMove(x, y);
-                invalidate();
-                break;
-            case MotionEvent.ACTION_UP:
-                touchUp(x, y);
-                invalidate();
-                break;
-        }
-        return true;
-    }
+	public boolean onTouchEvent(MotionEvent event) {
+		float x = event.getX();
+		float y = event.getY();
+		switch (event.getAction()) {
+		case MotionEvent.ACTION_DOWN:
+			touchStart(x, y);
+			invalidate();
+			break;
+		case MotionEvent.ACTION_MOVE:
+			touchMove(x, y);
+			invalidate();
+			break;
+		case MotionEvent.ACTION_UP:
+			touchUp(x, y);
+			invalidate();
+			break;
+		}
+		return true;
+	}
 
-    protected void onDraw(Canvas canvas) {
-        super.onDraw(canvas);
+	protected void onDraw(Canvas canvas) {
+		super.onDraw(canvas);
 
-        canvas.drawBitmap(bitmapBuff, 0, 0, paint);
-        canvas.drawPath(path, paint);
+		canvas.drawBitmap(bitmapBuff, 0, 0, paint);
+		canvas.drawPath(path, paint);
 
-    }
+	}
 
-    private void touchStart(float x, float y) {
-        path.reset();
-        path.moveTo(x, y);
-        mX = x;
-        mY = y;
+	private void touchStart(float x, float y) {
+		path.reset();
+		path.moveTo(x, y);
+		mX = x;
+		mY = y;
 
-    }
+	}
 
-    private void touchMove(float x, float y) {
-        float dx = Math.abs(x - mX);
-        float dy = Math.abs(y - mY);
-        if (dx >= TOUCH_TOLERANCE || dy >= TOUCH_TOLERANCE) {
-            path.quadTo(mX, mY, (x + mX) / 2, (y + mY) / 2);
-            mX = x;
-            mY = y;
+	private void touchMove(float x, float y) {
+		float dx = Math.abs(x - mX);
+		float dy = Math.abs(y - mY);
+		if (dx >= TOUCH_TOLERANCE || dy >= TOUCH_TOLERANCE) {
+			path.quadTo(mX, mY, (x + mX) / 2, (y + mY) / 2);
+			mX = x;
+			mY = y;
 
-        }
-    }
+		}
+	}
 
-    private void touchUp(float x, float y) {
+	private void touchUp(float x, float y) {
 
-        pathList.add(new Path(path));
+		pathList.add(new Path(path));
 
-        canvas.drawPath(path, paint);
+		canvas.drawPath(path, paint);
 
-        path.reset();
-    }
+		path.reset();
+	}
 
-    public void createPrintCanvas() {
+	public void createPrintCanvas() {
 
-        printBitmap = Bitmap.createBitmap(originBitmap);
+		printBitmap = Bitmap.createBitmap(originBitmap);
 
-        printBitmapBuff = Bitmap.createBitmap(printBitmap.getWidth(),
-                printBitmap.getHeight(), Bitmap.Config.ARGB_8888);
+		printBitmapBuff = Bitmap.createBitmap(printBitmap.getWidth(),
+				printBitmap.getHeight(), Bitmap.Config.ARGB_8888);
 
-        Matrix matrix = new Matrix();
+		Matrix matrix = new Matrix();
 
-        matrix.postScale(1 / scaleWidth, 1 / scaleHeight);
+		matrix.postScale(1 / scaleWidth, 1 / scaleHeight);
 
-        printCanvas = new Canvas(printBitmapBuff);
+		printCanvas = new Canvas(printBitmapBuff);
 
-        printCanvas.drawBitmap(printBitmap, 0, 0, paint);
+		printCanvas.drawBitmap(printBitmap, 0, 0, paint);
 
-        for (int i = 0; i < pathList.size(); i++) {
-            Path tempPath = new Path(pathList.get(i));
+		for (int i = 0; i < pathList.size(); i++) {
+			Path tempPath = new Path(pathList.get(i));
 
-            tempPath.transform(matrix);
+			tempPath.transform(matrix);
 
-            printCanvas.drawPath(tempPath, paint);
+			printCanvas.drawPath(tempPath, paint);
 
-            Log.d("path", tempPath.toString());
+			Log.d("path", tempPath.toString());
 
-        }
+		}
 
-        printCanvas.save();
+		printCanvas.save();
 
-    }
+	}
 
-    public float getScaleWidth() {
-        return scaleWidth;
-    }
+	public float getScaleWidth() {
+		return scaleWidth;
+	}
 
-    public float getScaleHeight() {
-        return scaleHeight;
-    }
+	public float getScaleHeight() {
+		return scaleHeight;
+	}
 
 }

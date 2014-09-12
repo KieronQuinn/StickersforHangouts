@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lint>
+    <issue id="AlwaysShowAction" severity="ignore" />
+    <issue id="ClickableViewAccessibility" severity="ignore" />
+    <issue id="ContentDescription" severity="ignore" />
+    <issue id="InflateParams" severity="ignore" />
+    <issue id="MissingTranslation" severity="ignore" />
+    <issue id="Overdraw" severity="ignore" />
+    <issue id="UnusedAttribute" severity="ignore" />
+    <issue id="ViewHolder" severity="ignore" />
+</lint>
