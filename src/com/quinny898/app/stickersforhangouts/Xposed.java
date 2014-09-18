@@ -1,14 +1,27 @@
 package com.quinny898.app.stickersforhangouts;
 
+import java.io.ByteArrayOutputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.Random;
 
+import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.XModuleResources;
+import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.os.Bundle;
+import android.os.Environment;
+import android.support.v4.app.Fragment;
 import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.view.animation.TranslateAnimation;
@@ -16,6 +29,7 @@ import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import de.robv.android.xposed.IXposedHookInitPackageResources;
 import de.robv.android.xposed.IXposedHookLoadPackage;
@@ -34,6 +48,7 @@ import static de.robv.android.xposed.XposedHelpers.callMethod;
 public class Xposed implements IXposedHookLoadPackage, IXposedHookZygoteInit,
 		IXposedHookInitPackageResources {
 	private int mButtonPosition;
+	Fragment qjFragment;
 	private int[] bikeshedColors = new int[] { Color.parseColor("#F8F8F8"),
 			Color.parseColor("#F0F8FF"), Color.parseColor("#FAEBD7"),
 			Color.parseColor("#00FFFF"), Color.parseColor("#7FFFD4"),
@@ -105,6 +120,11 @@ public class Xposed implements IXposedHookLoadPackage, IXposedHookZygoteInit,
 			Color.parseColor("#EE82EE"), Color.parseColor("#F5DEB3"),
 			Color.parseColor("#FFFFFF"), Color.parseColor("#F5F5F5"),
 			Color.parseColor("#FFFF00"), Color.parseColor("#9ACD32") };
+	protected Activity conversationActivity;
+	protected Intent intent;
+	protected Fab f;
+	protected boolean isFabShown;
+	protected RelativeLayout root;
 
 	public void handleLoadPackage(final LoadPackageParam lpparam)
 			throws Throwable {
@@ -267,11 +287,99 @@ public class Xposed implements IXposedHookLoadPackage, IXposedHookZygoteInit,
 						}
 					}
 				});
+		findAndHookMethod("qj", lpparam.classLoader, "r", new XC_MethodHook() {
+			@Override
+			protected void afterHookedMethod(MethodHookParam param)
+					throws Throwable {
+				Drawable input = (Drawable) param.getResult();
+				Bitmap bitmap = ((BitmapDrawable) input).getBitmap();
+				ByteArrayOutputStream stream = new ByteArrayOutputStream();
+				bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+				byte[] b = stream.toByteArray();
+				final ComponentName cn = new ComponentName(
+						"com.quinny898.app.stickersforhangouts",
+						"com.quinny898.app.stickersforhangouts.PaintActivity");
+				intent = new Intent().setComponent(cn);
+				intent.putExtra("edit", true);
+				String fileName = Environment.getExternalStorageDirectory()
+						.toString()
+						+ "/Android/data/com.quinny898.app.stickersforhangouts/"
+						+ "/tmp.png";
+				try {
+					FileOutputStream fos = new FileOutputStream(fileName);
+					fos.write(b);
+					fos.close();
+				} catch (IOException ioe) {
+					ioe.printStackTrace();
+				}
+
+				param.setResult(null);
+			}
+		});
+
+		findAndHookMethod("qj", lpparam.classLoader, "onCreateView",
+				LayoutInflater.class, ViewGroup.class, Bundle.class,
+				new XC_MethodHook() {
+
+					@Override
+					protected void afterHookedMethod(MethodHookParam param)
+							throws Throwable {
+						root = (RelativeLayout) param.getResult();
+						final Activity a = (Activity) callMethod(
+								param.thisObject, "getActivity");
+						f = new Fab(a);
+						final float scale = a.getResources()
+								.getDisplayMetrics().density;
+						int dip = (int) (72 * scale);
+						RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
+								dip, dip);
+						params.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+						params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+						f.setLayoutParams(params);
+						f.setFabColor(Color.WHITE);
+						f.setFabDrawable(a.getResources().getDrawable(mFakeIdE));
+						f.setOnClickListener(new OnClickListener() {
+
+							@Override
+							public void onClick(View arg0) {
+								Object conversationFragment = getObjectField(
+										conversationActivity, "s");
+								final ComponentName cn = new ComponentName(
+										"com.quinny898.app.stickersforhangouts",
+										"com.quinny898.app.stickersforhangouts.StartAviaryActivity");
+								Intent newIntent = new Intent()
+										.setComponent(cn);
+
+								callMethod(conversationFragment,
+										"startActivityForResult", newIntent, 1);
+								a.finish();
+							}
+
+						});
+						root.addView(f);
+
+						isFabShown = false;
+					}
+				});
+
+		// Save ConversationFragment's Activity for future use
+		findAndHookMethod(
+				"com.google.android.apps.hangouts.fragments.ConversationFragment",
+				lpparam.classLoader, "onCreateView", LayoutInflater.class,
+				ViewGroup.class, Bundle.class, new XC_MethodHook() {
+					@Override
+					protected void afterHookedMethod(MethodHookParam param)
+							throws Throwable {
+						conversationActivity = (Activity) callMethod(
+								param.thisObject, "getActivity");
+					}
+				});
 	}
 
 	private static String MODULE_PATH = null;
 	private int mFakeId = 0;
 	private int mFakeIdS = 0;
+	private int mFakeIdE = 0;
 
 	public void initZygote(StartupParam startupParam) throws Throwable {
 		MODULE_PATH = startupParam.modulePath;
@@ -287,5 +395,6 @@ public class Xposed implements IXposedHookLoadPackage, IXposedHookZygoteInit,
 		mFakeId = resparam.res
 				.addResource(modRes, R.drawable.konami_background);
 		mFakeIdS = resparam.res.addResource(modRes, R.drawable.shy_dino);
+		mFakeIdE  = resparam.res.addResource(modRes, R.drawable.ic_action_edit);
 	}
 }

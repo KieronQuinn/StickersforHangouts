@@ -347,7 +347,7 @@ public class StickerPickerActivity extends ActionBarActivity {
 				Toast.makeText(this, getString(R.string.error_download), Toast.LENGTH_LONG).show();
 				return;
 			}
-			History h = new History(this, uri);
+			History h = new History(uri);
 			h.save();
 			refreshUserFragment2();
 		}
