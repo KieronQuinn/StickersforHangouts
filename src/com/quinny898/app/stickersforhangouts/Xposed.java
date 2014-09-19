@@ -5,16 +5,19 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Random;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.content.res.XModuleResources;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.Fragment;
@@ -321,6 +324,7 @@ public class Xposed implements IXposedHookLoadPackage, IXposedHookZygoteInit,
 				LayoutInflater.class, ViewGroup.class, Bundle.class,
 				new XC_MethodHook() {
 
+					@SuppressLint("NewApi")
 					@Override
 					protected void afterHookedMethod(MethodHookParam param)
 							throws Throwable {
@@ -331,8 +335,10 @@ public class Xposed implements IXposedHookLoadPackage, IXposedHookZygoteInit,
 						final float scale = a.getResources()
 								.getDisplayMetrics().density;
 						int dip = (int) (72 * scale);
+						int margin = (int) (20 * scale);
 						RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
 								dip, dip);
+						params.setMargins(0, 0, dip/4, getNavBarHeight(a,margin));
 						params.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
 						params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
 						f.setLayoutParams(params);
@@ -384,7 +390,19 @@ public class Xposed implements IXposedHookLoadPackage, IXposedHookZygoteInit,
 	public void initZygote(StartupParam startupParam) throws Throwable {
 		MODULE_PATH = startupParam.modulePath;
 	}
-
+	public int getNavBarHeight(Context context, int margin){
+		Resources resources = context.getResources();
+		int resourceId = resources.getIdentifier("navigation_bar_height", "dimen", "android");
+		if (resourceId > 0) {
+			//KitKat renders behind the navigation bar, jelly bean and below cannot
+			if(Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN_MR2){
+				return resources.getDimensionPixelSize(resourceId) + margin;
+			}else{
+				return margin;
+			}
+		}
+		return margin;
+	}
 	public void handleInitPackageResources(InitPackageResourcesParam resparam)
 			throws Throwable {
 		if (!resparam.packageName.equals("com.google.android.talk"))

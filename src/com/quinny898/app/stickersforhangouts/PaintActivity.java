@@ -47,9 +47,9 @@ public class PaintActivity extends ActionBarActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		StartAppSDK.init(this, "102378373", "205305173");
-
-		colorPicker = (ImageButton) findViewById(R.id.colorpicker);
 		setContentView(R.layout.activity_paint);
+		colorPicker = (ImageButton) findViewById(R.id.colorpicker);
+		
 		canvas = (FingerPaintView) findViewById(R.id.canvas);
 
 		background = (SquareView) findViewById(R.id.canvasBorder);
