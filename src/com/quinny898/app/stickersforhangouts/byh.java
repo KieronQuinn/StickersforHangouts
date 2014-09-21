@@ -11,9 +11,9 @@ public class byh {
 
 	public String b() {
 		return this.a;
-	}
+	}  
 
 	public int c() {
 		return this.b;
-	}
+	} 
 }
