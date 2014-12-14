@@ -20,15 +20,16 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -51,7 +52,7 @@ public class UserFragment extends Fragment {
 	private static List<History> images;
 	static int numberNotExisting = 0;
 	public static ArrayList<String> namesNotExisting;
-	static ActionBarActivity c;
+	static FragmentActivity c;
 	static int IMAGE_PICKER_SELECT = 0;
 	static ActionBarActivity activity;
 
@@ -59,7 +60,7 @@ public class UserFragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		activity = (ActionBarActivity) getActivity();
-		c = (ActionBarActivity) getActivity();
+		c = (FragmentActivity) getActivity();
 		images = History.listAll(History.class);
 		final SharedPreferences prefs = getActivity().getSharedPreferences(
 				getActivity().getPackageName() + "_prefs",
@@ -453,8 +454,8 @@ public class UserFragment extends Fragment {
 		activity.startActivityForResult(i, IMAGE_PICKER_SELECT);
 	}
 
-	public static void refresh(ActionBarActivity c) {
-		UserFragment.c = c;
+	public static void refresh(FragmentActivity stickerPickerActivity) {
+		UserFragment.c = (FragmentActivity) stickerPickerActivity;
 		new CopyFiles().execute();
 		RelativeLayout no_stickers = (RelativeLayout) v
 				.findViewById(R.id.no_stickers);
@@ -462,7 +463,7 @@ public class UserFragment extends Fragment {
 		no_stickers.setVisibility(View.GONE);
 		main.setVisibility(View.VISIBLE);
 		images = History.listAll(History.class);
-		toplayout.setAdapter(new ImageAdapter(c));
+		toplayout.setAdapter(new ImageAdapter(stickerPickerActivity));
 	}
 
 	public static void clearAll() {

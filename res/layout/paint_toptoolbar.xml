@@ -86,9 +86,16 @@
                     android:id="@+id/ImageButton06"
                     android:layout_width="25dp"
                     android:layout_height="25dp"
-                    android:background="@drawable/paint_rounded_corners_right"
+                    android:background="#c5c5c5"
                     android:onClick="pensize75"
                     android:src="@drawable/pensize75" />
+                <ImageButton
+                    android:id="@+id/ImageButtonCustom"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:background="@drawable/paint_rounded_corners_right"
+                    android:onClick="pensizecustom"
+                    android:src="@drawable/ic_more" />
             </LinearLayout>
 
             <LinearLayout

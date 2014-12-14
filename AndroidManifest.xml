@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.quinny898.app.stickersforhangouts"
-    android:versionCode="142"
-    android:versionName="1.4.2" >
+    android:versionCode="144"
+    android:versionName="1.4.4" >
 
     <uses-sdk
         android:minSdkVersion="9"
-        android:targetSdkVersion="20" />
+        android:targetSdkVersion="21" />
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -57,7 +57,7 @@
         <activity
             android:name="com.startapp.android.publish.list3d.List3DActivity"
             android:taskAffinity="com.quinny898.app.stickersforhangouts.AppWall"
-            android:theme="@android:style/Theme" />
+            android:theme="@style/Theme.Hangouts" />
         <activity
             android:name="com.startapp.android.publish.AppWallActivity"
             android:configChanges="orientation|keyboardHidden"
@@ -85,7 +85,7 @@
             android:process=":aviarysdk"
             android:screenOrientation="unspecified"
             android:theme="@style/AviaryTheme" />
-        <!-- Alert -->
+        
         <activity
             android:name="com.aviary.android.feather.AlertActivity"
             android:launchMode="standard"
@@ -97,7 +97,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
+ 
         <!-- CDS Content Service -->
         <service
             android:name="com.aviary.android.feather.cds.AviaryCdsService"
@@ -112,7 +112,7 @@
         <!--
         Cds Content Provider, 
         NOTE that the "authorities" value MUST be formatted in this way:
-        android:authorities="{your.packagename}.AviaryCdsProvider"
+        android:authorities="{your.packagename} .AviaryCdsProvider"
         -->
         <provider
             android:name="com.aviary.android.feather.cds.AviaryCdsProvider"

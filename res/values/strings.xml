@@ -44,5 +44,7 @@
     <string name="add_drawing">Add Drawing</string>
     <string name="disable_toast">Disable Toast</string>
     <string name="disable_toast_info">Disable the toast that accompanies the ads</string>
+    <string name="pen_size">Pen Size</string>
+    <string name="copying_file">Loading Image...</string>
 
 </resources>

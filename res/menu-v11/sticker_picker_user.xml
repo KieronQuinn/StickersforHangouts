@@ -22,7 +22,8 @@
         android:icon="@drawable/ic_action_add"
         android:showAsAction="always"
         android:title="@string/add_a_sticker"
-        app:showAsAction="always">
+       >
+       <!--  app:showAsAction="always" -->
     </item>
     <item
         android:id="@+id/action_clear_all"

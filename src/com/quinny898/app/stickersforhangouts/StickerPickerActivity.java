@@ -18,11 +18,11 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ComponentName;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
+import android.content.DialogInterface;
 import android.database.Cursor;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -40,15 +40,16 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+@SuppressWarnings("deprecation")
 public class StickerPickerActivity extends ActionBarActivity {
 	SharedPreferences prefs;
 	ViewPager mViewPager;
 	String[] mViewPagerTabsTitles;
 	Fragment[] mViewPagerFragments;
 	boolean isUserFragment;
-	static ActionBarActivity activity;
+	static StickerPickerActivity activity;
 	private StartAppAd startAppAd = new StartAppAd(this);
-	static StartAppAd saa;
+	static StartAppAd saa; 
 	static String[] gifs = new String[] { "angry.gif", "cake.gif",
 			"cathappy.gif", "catheart.gif", "celebration.gif", "cheers.gif",
 			"confused.gif", "crying.gif", "doublehighfive.gif",
@@ -58,7 +59,7 @@ public class StickerPickerActivity extends ActionBarActivity {
 			"mumstheword.gif", "music.gif", "ohno.gif", "okay.gif",
 			"omgterrified.gif", "poop.gif", "praying.gif", "princess.gif",
 			"sad.gif", "scared.gif", "sick.gif", "silly.gif", "sleepy.gif",
-			"smirk.gif", "sparklingheart.gif", "sunglasses.gif",
+			"smirk.gif", "sparklingheart.gif", "sunglasses.gif", 
 			"thumbsdown.gif", "thumbsup.gif", "thumpingheart.gif",
 			"waving.gif", "wink.gif", "winter.gif", "worried.gif",
 			"spring.gif", "valentine.gif", "newyear.gif", "irish.gif" };
@@ -103,7 +104,7 @@ public class StickerPickerActivity extends ActionBarActivity {
 		fragTransaction.attach(currentFragment);
 		fragTransaction.commit();
 	}
-
+ 
 	public void refreshUserFragment2() {
 		UserFragment.refresh(this);
 	}

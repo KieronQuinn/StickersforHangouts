@@ -5,9 +5,9 @@ import com.startapp.android.publish.StartAppSDK;
 import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -31,6 +31,7 @@ public class MainActivity extends ActionBarActivity {
 			// Apparently, this happens. I don't know why, but it does - blame
 			// Gingerbread.
 		}
+		
 	}
 
 	public void about() {

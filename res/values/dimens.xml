@@ -4,5 +4,6 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="grid_item_height">120dip</dimen>
+    <dimen name="dino_height">20dp</dimen>
 
 </resources>

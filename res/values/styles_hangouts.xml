@@ -18,8 +18,7 @@
 -->
 
 <resources>
-
-    <style name="Theme.Hangouts" parent="@style/Theme.AppCompat.Light.DarkActionBar">
+  <style name="Theme.Hangouts" parent="@style/Theme.AppCompat.Light.DarkActionBar">
         <item name="actionBarItemBackground">@drawable/selectable_background_hangouts</item>
         <item name="popupMenuStyle">@style/PopupMenu.Hangouts</item>
         <item name="dropDownListViewStyle">@style/DropDownListView.Hangouts</item>
@@ -30,11 +29,11 @@
         <item name="actionModeSplitBackground">@drawable/cab_background_bottom_hangouts</item>
         <item name="actionModeCloseButtonStyle">@style/ActionButton.CloseMode.Hangouts</item>
 
-                <!-- Light.DarkActionBar specific -->
+                
         <item name="actionBarWidgetTheme">@style/Theme.Hangouts.Widget</item>
 
     </style>
-
+ 
     <style name="ActionBar.Solid.Hangouts" parent="@style/Widget.AppCompat.Light.ActionBar.Solid.Inverse">
         <item name="background">@drawable/ab_solid_hangouts</item>
         <item name="backgroundStacked">@drawable/ab_stacked_solid_hangouts</item>
@@ -73,7 +72,6 @@
         <item name="android:background">@drawable/btn_cab_done_hangouts</item>
     </style>
     
-    <!-- this style is only referenced in a Light.DarkActionBar based theme -->
     <style name="Theme.Hangouts.Widget" parent="@style/Theme.AppCompat">
         <item name="popupMenuStyle">@style/PopupMenu.Hangouts</item>
         <item name="dropDownListViewStyle">@style/DropDownListView.Hangouts</item>

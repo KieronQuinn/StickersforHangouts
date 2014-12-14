@@ -7,7 +7,10 @@ import com.startapp.android.publish.StartAppSDK;
 import it.gmariotti.android.example.colorpicker.Utils;
 import it.gmariotti.android.example.colorpicker.calendarstock.ColorPickerDialog;
 import it.gmariotti.android.example.colorpicker.calendarstock.ColorPickerSwatch;
+import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Intent;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -18,6 +21,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.SeekBar;
 
 public class PaintActivity extends ActionBarActivity {
 
@@ -43,20 +47,22 @@ public class PaintActivity extends ActionBarActivity {
 	private static SquareView background;
 	public static Drawable drawable;
 
+	@SuppressLint("NewApi")
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		StartAppSDK.init(this, "102378373", "205305173");
 		setContentView(R.layout.activity_paint);
 		colorPicker = (ImageButton) findViewById(R.id.colorpicker);
-		
+
 		canvas = (FingerPaintView) findViewById(R.id.canvas);
 
 		background = (SquareView) findViewById(R.id.canvasBorder);
-
-		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-		getSupportActionBar().setIcon(
-				getResources().getDrawable(R.drawable.ic_hangouts_ab));
+		
+			getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+			getSupportActionBar().setIcon(
+					getResources().getDrawable(R.drawable.ic_hangouts_ab));
+		
 	}
 
 	public static void setBackgroundSize(int w, int h) {
@@ -162,6 +168,42 @@ public class PaintActivity extends ActionBarActivity {
 		v.setBackgroundResource(R.drawable.paint_rounded_corners_right_sel);
 	}
 
+	public void pensizecustom(View v) {
+		seekDialog(v);
+	}
+
+	public void seekDialog(final View v) {
+		final AlertDialog.Builder popDialog = new AlertDialog.Builder(this);
+		final SeekBar seek = new SeekBar(this);
+		seek.setMax(20);
+		
+		seek.setProgress((int) FingerPaintView.strokeWidth);
+		popDialog.setTitle(getString(R.string.pen_size));
+		popDialog.setView(seek);
+
+		popDialog.setPositiveButton(getString(android.R.string.ok),
+				new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int which) {
+						((FingerPaintView) canvas).setStrokeWidth(seek
+								.getProgress());
+						
+						resetSizeButtons();
+						v.setBackgroundResource(R.drawable.paint_rounded_corners_right_sel);
+					}
+
+				});
+		popDialog.setNegativeButton(getString(android.R.string.cancel),
+				new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int which) {
+						dialog.dismiss();
+					}
+
+				});
+
+		popDialog.create();
+		popDialog.show();
+	}
+
 	public void cancel(View v) {
 		finish();
 	}
@@ -171,10 +213,12 @@ public class PaintActivity extends ActionBarActivity {
 		ImageButton b2 = (ImageButton) findViewById(R.id.ImageButton07);
 		ImageButton b3 = (ImageButton) findViewById(R.id.ImageButton08);
 		ImageButton b4 = (ImageButton) findViewById(R.id.ImageButton06);
+		ImageButton b5 = (ImageButton) findViewById(R.id.ImageButtonCustom);
 		b1.setBackgroundResource(R.drawable.paint_rounded_corners_left);
 		b2.setBackgroundColor(Color.parseColor("#c5c5c5"));
 		b3.setBackgroundColor(Color.parseColor("#c5c5c5"));
-		b4.setBackgroundResource(R.drawable.paint_rounded_corners_right);
+		b4.setBackgroundColor(Color.parseColor("#c5c5c5"));
+		b5.setBackgroundResource(R.drawable.paint_rounded_corners_right);
 	}
 
 	public void send(View v) {

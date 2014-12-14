@@ -39,11 +39,12 @@ public class FingerPaintView extends View {
 	private List<Path> pathList;
 	int i = 0;
 	private Bitmap printBitmap;
-
+	static float strokeWidth;
 	public FingerPaintView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		this.setDrawingCacheEnabled(true);
 		loadBitmap(context);
+		strokeWidth = 1.6f;
 		Log.i("Context context, AttributeSet attrs", "11");
 	}
 
@@ -59,6 +60,7 @@ public class FingerPaintView extends View {
 	}
 
 	public void setStrokeWidth(float width) {
+		strokeWidth = width;
 		paint.setStrokeWidth(width);
 	}
 
